@@ -1,0 +1,16 @@
+
+services:
+  db:
+    image: postgres:16
+    container_name: controle_verbas_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456789
+      POSTGRES_DB: controle_verbas_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
