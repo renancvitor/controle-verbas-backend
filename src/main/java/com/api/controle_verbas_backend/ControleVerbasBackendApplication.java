@@ -1,4 +1,4 @@
-package com.seunome.controle_verbas_backend;
+package com.api.controle_verbas_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
