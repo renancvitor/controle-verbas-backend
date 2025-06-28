@@ -1,4 +1,4 @@
-package com.api.controleverbasbackend.domain;
+package com.api.controleverbasbackend.domain.cargo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
