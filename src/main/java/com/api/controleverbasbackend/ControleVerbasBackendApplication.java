@@ -1,4 +1,4 @@
-package com.api.controle_verbas_backend;
+package com.api.controleverbasbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

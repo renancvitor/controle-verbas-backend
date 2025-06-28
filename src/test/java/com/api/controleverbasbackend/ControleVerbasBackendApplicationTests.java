@@ -1,4 +1,4 @@
-package com.seunome.controle_verbas_backend;
+package com.api.controleverbasbackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
