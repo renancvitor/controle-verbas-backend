@@ -1,6 +1,6 @@
 package com.api.controleverbasbackend.domain.cargo;
 
-import com.api.controleverbasbackend.dto.DadosCadastroCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.api.controleverbasbackend.dto.DadosCadastroCargo;
-import com.api.controleverbasbackend.dto.DadosDetalhamentoCargo;
-import com.api.controleverbasbackend.dto.DadosListagemCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
 import com.api.controleverbasbackend.service.CargoService;
 
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.api.controleverbasbackend.dto;
+package com.api.controleverbasbackend.dto.cargo;
 
 import com.api.controleverbasbackend.domain.cargo.Cargo;
 
