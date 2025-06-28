@@ -2,11 +2,9 @@ package com.api.controleverbasbackend.dto;
 
 import com.api.controleverbasbackend.domain.cargo.Cargo;
 
-import jakarta.validation.constraints.NotBlank;
+public record DadosDetalhamentoCargo(Long id, String nome) {
 
-public record DadosListagemCargo(Long id, String nome) {
-
-    public DadosListagemCargo(Cargo cargo) {
+    public DadosDetalhamentoCargo(Cargo cargo) {
         this(
                 cargo.getId(),
                 cargo.getNome());

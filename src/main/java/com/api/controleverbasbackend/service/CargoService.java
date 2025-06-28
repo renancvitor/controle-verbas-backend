@@ -6,6 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.controleverbasbackend.domain.cargo.Cargo;
+import com.api.controleverbasbackend.dto.DadosCadastroCargo;
+import com.api.controleverbasbackend.dto.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.DadosListagemCargo;
 import com.api.controleverbasbackend.repository.CargoRepository;
 
@@ -18,5 +21,13 @@ public class CargoService {
     @Transactional
     public Page<DadosListagemCargo> listar(Pageable pageable) {
         return cargoRepository.findAll(pageable).map(DadosListagemCargo::new);
+    }
+
+    @Transactional
+    public DadosDetalhamentoCargo cadastrar(DadosCadastroCargo dados) {
+
+        Cargo cargo = new Cargo(dados);
+        cargoRepository.save(cargo);
+        return new DadosDetalhamentoCargo(cargo);
     }
 }
