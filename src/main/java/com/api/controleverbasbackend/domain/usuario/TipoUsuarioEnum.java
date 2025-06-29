@@ -7,7 +7,7 @@ public enum TipoUsuarioEnum {
     VISUALIZADOR(3),
     COMUM(4);
 
-    private int id;
+    private final int id;
 
     TipoUsuarioEnum(int id) {
         this.id = id;
