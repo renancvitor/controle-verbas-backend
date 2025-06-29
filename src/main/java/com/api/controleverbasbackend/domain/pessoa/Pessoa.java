@@ -29,13 +29,16 @@ public class Pessoa {
     @Column(unique = true, nullable = false)
     private String nome;
 
+    @Column(unique = true, nullable = false)
     private String cpf;
+
+    @Column(unique = true, nullable = false)
     private String email;
     private LocalDateTime dataCadastro;
 
     public Pessoa(DadosCadastroPessoa dados) {
         this.nome = dados.nome();
         this.cpf = dados.cpf();
-        this.email = dados.email()
+        this.email = dados.email();
     }
 }
