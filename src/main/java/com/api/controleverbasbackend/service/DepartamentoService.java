@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.controleverbasbackend.domain.departamento.Departamento;
+import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosListagemDepartamento;
 import com.api.controleverbasbackend.repository.DepartamentoRepository;
@@ -23,8 +24,9 @@ public class DepartamentoService {
     }
 
     @Transactional
-    public DadosDetalhamentoDepartamento cadastrar(DadosDetalhamentoDepartamento dados) {
+    public DadosDetalhamentoDepartamento cadastrar(DadosCadastroDepartamento dados) {
         Departamento departamento = new Departamento();
+        departamentoRepository.save(departamento);
         return new DadosDetalhamentoDepartamento(departamento);
     }
 }
