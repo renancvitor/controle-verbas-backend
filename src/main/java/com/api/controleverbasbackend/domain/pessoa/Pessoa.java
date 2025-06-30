@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import com.api.controleverbasbackend.domain.cargo.Cargo;
 import com.api.controleverbasbackend.domain.departamento.Departamento;
-import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoa;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
