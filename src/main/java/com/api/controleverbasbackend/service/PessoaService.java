@@ -12,6 +12,7 @@ import com.api.controleverbasbackend.domain.pessoa.Pessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosDetalhamentoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosListagemPessoa;
+import com.api.controleverbasbackend.infra.NaoEncontradoException;
 import com.api.controleverbasbackend.repository.CargoRepository;
 import com.api.controleverbasbackend.repository.DepartamentoRepository;
 import com.api.controleverbasbackend.repository.PessoaRepository;
@@ -36,9 +37,9 @@ public class PessoaService {
     @Transactional
     public DadosDetalhamentoPessoa cadastrar(DadosCadastroPessoa dados) {
         Departamento departamento = departamentoRepository.findById(dados.idDepartamento())
-                .orElseThrow(() -> new RuntimeException("Departamento não encontrado"));
+                .orElseThrow(() -> new NaoEncontradoException("Departamento não existe"));
         Cargo cargo = cargoRepository.findById(dados.idCargo())
-                .orElseThrow(() -> new RuntimeException("Cargo não encontrado"));
+                .orElseThrow(() -> new NaoEncontradoException("Cargo não existe"));
 
         Pessoa pessoa = new Pessoa(
                 dados.nome(),
