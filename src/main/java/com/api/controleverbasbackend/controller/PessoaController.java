@@ -45,5 +45,4 @@ public class PessoaController {
 
         return ResponseEntity.created(uri).body(pessoa);
     }
-
 }

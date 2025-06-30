@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 import com.api.controleverbasbackend.domain.pessoa.Pessoa;
 
-public record DadosListagemPessoa(Long id, String nome, String cpf, String email, LocalDateTime dataCadastro) {
+public record DadosListagemPessoa(Long id, String nome, String cpf, String email,
+        String nomeDepartamento, String nomeCargo, LocalDateTime dataCadastro) {
 
     public DadosListagemPessoa(Pessoa pessoa) {
         this(
@@ -12,6 +13,8 @@ public record DadosListagemPessoa(Long id, String nome, String cpf, String email
                 pessoa.getNome(),
                 pessoa.getCpf(),
                 pessoa.getEmail(),
+                pessoa.getDepartamento().getNome(),
+                pessoa.getCargo().getNome(),
                 pessoa.getDataCadastro());
     }
 }

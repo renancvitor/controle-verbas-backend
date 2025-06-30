@@ -1,14 +1,12 @@
 package com.api.controleverbasbackend.domain.pessoa;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-
 import java.time.LocalDateTime;
 
+import com.api.controleverbasbackend.domain.cargo.Cargo;
+import com.api.controleverbasbackend.domain.departamento.Departamento;
 import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoa;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,11 +32,23 @@ public class Pessoa {
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "departamento_id")
+    private Departamento departamento;
+
+    @ManyToOne
+    @JoinColumn(name = "cargo_id")
+    private Cargo cargo;
+
     private LocalDateTime dataCadastro;
 
-    public Pessoa(DadosCadastroPessoa dados) {
-        this.nome = dados.nome();
-        this.cpf = dados.cpf();
-        this.email = dados.email();
+    public Pessoa(String nome, String cpf, String email, Departamento departamento, Cargo cargo) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.departamento = departamento;
+        this.cargo = cargo;
+        this.dataCadastro = LocalDateTime.now();
     }
 }
