@@ -3,8 +3,8 @@ package com.api.controleverbasbackend.domain.usuario;
 public enum PermissaoEnum {
     GERENCIAR_USUARIOS(1),
     REALIZAR_SOLICITAOES(2),
-    VISUALIZAR_TODAS_SOLICITACOES(3),
-    APROVAR_REPROVAR_SOLICITACOES(4);
+    VISUALIZAR_TODOS_ORCAMENTOS(3),
+    APROVAR_REPROVAR_ORCAMENTOS(4);
 
     private final int id;
 
