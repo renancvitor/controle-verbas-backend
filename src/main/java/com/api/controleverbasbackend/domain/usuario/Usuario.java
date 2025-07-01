@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -30,11 +31,11 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     @JoinColumn(name = "pessoa_id", nullable = false, unique = true)
     private Pessoa pessoa;
 
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private TipoUsuarioEntidade tipoUsuario;
 }
