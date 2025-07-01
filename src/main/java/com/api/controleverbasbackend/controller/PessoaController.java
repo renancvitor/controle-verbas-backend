@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.api.controleverbasbackend.dto.DadosCadastroPessoaUsuario;
 import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosDetalhamentoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosListagemPessoa;
+import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
 import com.api.controleverbasbackend.service.PessoaService;
 
 import jakarta.validation.Valid;
@@ -36,9 +38,10 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<DadosDetalhamentoPessoa> cadastrar(@RequestBody @Valid DadosCadastroPessoa dados,
+    public ResponseEntity<DadosDetalhamentoPessoa> cadastrar(
+            @RequestBody @Valid DadosCadastroPessoaUsuario dadosCadastro,
             UriComponentsBuilder uriComponentsBuilder) {
-        DadosDetalhamentoPessoa pessoa = pessoaService.cadastrar(dados);
+        DadosDetalhamentoPessoa pessoa = pessoaService.cadastrar(dadosCadastro.pessoa(), dadosCadastro.usuario());
         URI uri = uriComponentsBuilder.path("/pessoas/{id}")
                 .buildAndExpand(pessoa.id())
                 .toUri();

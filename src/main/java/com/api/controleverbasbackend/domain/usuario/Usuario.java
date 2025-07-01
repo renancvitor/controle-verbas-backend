@@ -1,6 +1,14 @@
 package com.api.controleverbasbackend.domain.usuario;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.api.controleverbasbackend.domain.pessoa.Pessoa;
+import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +29,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +45,25 @@ public class Usuario {
     @OneToOne(optional = false)
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private TipoUsuarioEntidade tipoUsuario;
+
+    public Usuario(String senha, Pessoa pessoa, TipoUsuarioEntidade tipoUsuario) {
+        this.senha = senha;
+        this.pessoa = pessoa;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return pessoa.getEmail();
+    }
 }

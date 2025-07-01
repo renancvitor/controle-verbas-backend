@@ -1,4 +1,4 @@
-package com.api.controleverbasbackend.infra;
+package com.api.controleverbasbackend.infra.exception;
 
 public class ValidacaoException extends RuntimeException {
 
