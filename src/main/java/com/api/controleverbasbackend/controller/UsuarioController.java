@@ -21,7 +21,7 @@ public class UsuarioController {
 
     @GetMapping
     public ResponseEntity<Page<DadosListagemUsuario>> listar(
-            @PageableDefault(size = 20, sort = ("nome")) Pageable pageable) {
+            @PageableDefault(size = 20, sort = ("pessoa.email")) Pageable pageable) {
         Page<DadosListagemUsuario> page = usuarioService.listar(pageable);
         return ResponseEntity.ok(page);
     }
