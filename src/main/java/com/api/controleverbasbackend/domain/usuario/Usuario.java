@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.api.controleverbasbackend.domain.pessoa.Pessoa;
-import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
