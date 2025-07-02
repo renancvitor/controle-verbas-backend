@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.api.controleverbasbackend.dto.DadosCadastroPessoaUsuario;
-import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosDetalhamentoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosListagemPessoa;
-import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
 import com.api.controleverbasbackend.service.PessoaService;
 
 import jakarta.validation.Valid;
