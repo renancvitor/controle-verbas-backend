@@ -1,6 +1,8 @@
 package com.api.controleverbasbackend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,7 @@ import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
+import com.api.controleverbasbackend.dto.usuario.DadosListagemUsuario;
 import com.api.controleverbasbackend.repository.TipoUsuarioRepository;
 import com.api.controleverbasbackend.repository.UsuarioRepository;
 
@@ -26,6 +29,10 @@ public class UsuarioService {
 
     @Autowired
     private TipoUsuarioRepository tipoUsuarioRepository;
+
+    public Page<DadosListagemUsuario> listar(Pageable pageable) {
+        return usuarioRepository.findAll(pageable).map(DadosListagemUsuario::new);
+    }
 
     @Transactional
     public void cadastrar(Pessoa pessoa, DadosCadastroUsuario dadosCadastroUsuario) {
