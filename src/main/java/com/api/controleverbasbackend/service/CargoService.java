@@ -21,9 +21,6 @@ public class CargoService {
     @Autowired
     private CargoRepository cargoRepository;
 
-    @Autowired
-    private Usuario usuario;
-
     @Transactional
     public Page<DadosListagemCargo> listar(Pageable pageable, Usuario usuario) {
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.name())) {
