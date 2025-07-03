@@ -12,8 +12,12 @@ import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosatualizacaoCargo;
 import com.api.controleverbasbackend.infra.exception.AutorizacaoException;
+import com.api.controleverbasbackend.infra.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.CargoRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CargoService {
@@ -37,6 +41,22 @@ public class CargoService {
 
         Cargo cargo = new Cargo(dados);
         cargoRepository.save(cargo);
+        return new DadosDetalhamentoCargo(cargo);
+    }
+
+    @Transactional
+    public DadosDetalhamentoCargo atualizar(Long id, DadosatualizacaoCargo dados, Usuario usuario) {
+        Cargo cargo = cargoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cargo com ID " + id + " não encontrado."));
+
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o admin pode atualizar cargos.");
+        }
+        if (cargo.getNome() == null || cargo.getNome().isBlank()) {
+            throw new ValidacaoException("O nome deve ser preenchido corretamente.");
+        }
+
+        cargo.atualizar(dados);
         return new DadosDetalhamentoCargo(cargo);
     }
 }

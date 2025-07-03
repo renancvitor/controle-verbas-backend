@@ -1,6 +1,7 @@
 package com.api.controleverbasbackend.domain.cargo;
 
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosatualizacaoCargo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,5 +31,11 @@ public class Cargo {
 
     public Cargo(DadosCadastroCargo dados) {
         this.nome = dados.nome();
+    }
+
+    public void atualizar(DadosatualizacaoCargo dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
     }
 }
