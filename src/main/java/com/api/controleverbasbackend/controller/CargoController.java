@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
@@ -38,9 +40,9 @@ public class CargoController {
 
     @PostMapping
     public ResponseEntity<DadosDetalhamentoCargo> cadastrar(@RequestBody @Valid DadosCadastroCargo dados,
-            UriComponentsBuilder uriComponentsBuilder) {
+            UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
 
-        DadosDetalhamentoCargo cargo = cargoService.cadastrar(dados);
+        DadosDetalhamentoCargo cargo = cargoService.cadastrar(dados, usuario);
         URI uri = uriComponentsBuilder.path("/cargos/{id}").buildAndExpand(cargo.id()).toUri();
 
         return ResponseEntity.created(uri).body(cargo);
