@@ -25,14 +25,17 @@ public class CargoService {
     private Usuario usuario;
 
     @Transactional
-    public Page<DadosListagemCargo> listar(Pageable pageable) {
+    public Page<DadosListagemCargo> listar(Pageable pageable, Usuario usuario) {
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.name())) {
+            throw new AutorizacaoException("Apenas o admin pode listar cargos cadastrados.");
+        }
         return cargoRepository.findAll(pageable).map(DadosListagemCargo::new);
     }
 
     @Transactional
     public DadosDetalhamentoCargo cadastrar(DadosCadastroCargo dados, Usuario usuario) {
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-            throw new AutorizacaoException("Apenas o admin pode cadastrar novos cargos");
+            throw new AutorizacaoException("Apenas o admin pode cadastrar novos cargos.");
         }
 
         Cargo cargo = new Cargo(dados);

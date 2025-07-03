@@ -32,9 +32,9 @@ public class CargoController {
 
     @GetMapping
     public ResponseEntity<Page<DadosListagemCargo>> listar(
-            @PageableDefault(size = 20, sort = ("nome")) Pageable pageable) {
+            @PageableDefault(size = 20, sort = ("nome")) Pageable pageable, @AuthenticationPrincipal Usuario usuario) {
 
-        Page<DadosListagemCargo> page = cargoService.listar(pageable);
+        Page<DadosListagemCargo> page = cargoService.listar(pageable, usuario);
         return ResponseEntity.ok(page);
     }
 
