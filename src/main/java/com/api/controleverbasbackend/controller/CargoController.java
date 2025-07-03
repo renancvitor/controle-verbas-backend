@@ -9,7 +9,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosatualizacaoCargo;
 import com.api.controleverbasbackend.service.CargoService;
 
 import jakarta.validation.Valid;
@@ -46,5 +49,12 @@ public class CargoController {
         URI uri = uriComponentsBuilder.path("/cargos/{id}").buildAndExpand(cargo.id()).toUri();
 
         return ResponseEntity.created(uri).body(cargo);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosatualizacaoCargo dados,
+            @AuthenticationPrincipal Usuario usuario) {
+        DadosDetalhamentoCargo dadosCargo = cargoService.atualizar(id, dados, usuario);
+        return ResponseEntity.ok(dadosCargo);
     }
 }
