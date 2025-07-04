@@ -1,5 +1,6 @@
 package com.api.controleverbasbackend.domain.departamento;
 
+import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 
 import jakarta.persistence.*;
@@ -25,5 +26,11 @@ public class Departamento {
 
     public Departamento(DadosCadastroDepartamento dados) {
         this.nome = dados.nome();
+    }
+
+    public void atualizar(DadosAtualizacaoDepartamento dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
     }
 }
