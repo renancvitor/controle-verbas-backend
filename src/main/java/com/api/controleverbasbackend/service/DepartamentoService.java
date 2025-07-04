@@ -38,7 +38,8 @@ public class DepartamentoService {
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode cadastrar novos cargos.");
         }
-        Departamento departamento = new Departamento();
+
+        Departamento departamento = new Departamento(dados);
         departamentoRepository.save(departamento);
         return new DadosDetalhamentoDepartamento(departamento);
     }
