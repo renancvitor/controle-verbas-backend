@@ -46,7 +46,8 @@ public class PessoaService {
         }
 
         @Transactional
-        public DadosDetalhamentoPessoa cadastrar(DadosCadastroPessoa dadosPessoa, DadosCadastroUsuario dadosUsuario) {
+        public DadosDetalhamentoPessoa cadastrar(DadosCadastroPessoa dadosPessoa, DadosCadastroUsuario dadosUsuario,
+                        Usuario usuario) {
                 Departamento departamento = departamentoRepository.findById(dadosPessoa.idDepartamento())
                                 .orElseThrow(() -> new NaoEncontradoException("Departamento não existe"));
                 Cargo cargo = cargoRepository.findById(dadosPessoa.idCargo())
