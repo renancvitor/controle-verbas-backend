@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import com.api.controleverbasbackend.domain.cargo.Cargo;
 import com.api.controleverbasbackend.domain.departamento.Departamento;
+import com.api.controleverbasbackend.dto.pessoa.DadosAtualizacaoPessoa;
+import com.api.controleverbasbackend.repository.CargoRepository;
+import com.api.controleverbasbackend.repository.DepartamentoRepository;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -49,5 +52,18 @@ public class Pessoa {
         this.departamento = departamento;
         this.cargo = cargo;
         this.dataCadastro = LocalDateTime.now();
+    }
+
+    public void atualizar(DadosAtualizacaoPessoa dados,
+            CargoRepository cargoRepository,
+            DepartamentoRepository departamentoRepository) {
+        if (dados.idCargo() != null) {
+            this.cargo = cargoRepository.findById(dados.idCargo())
+                    .orElseThrow(() -> new RuntimeException("Cargo não encontrado"));
+        }
+        if (dados.idDepartamento() != null) {
+            this.departamento = departamentoRepository.findById(dados.idDepartamento())
+                    .orElseThrow(() -> new RuntimeException("Departamento não encontrado"));
+        }
     }
 }
