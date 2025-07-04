@@ -41,7 +41,7 @@ public class PessoaService {
         private UsuarioService usuarioService;
 
         @Transactional
-        public Page<DadosListagemPessoa> listar(Pageable pageable) {
+        public Page<DadosListagemPessoa> listar(Pageable pageable, Usuario usuario) {
                 return pessoaRepository.findAll(pageable).map(DadosListagemPessoa::new);
         }
 
