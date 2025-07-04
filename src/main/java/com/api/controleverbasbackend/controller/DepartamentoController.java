@@ -9,13 +9,17 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
+import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosListagemDepartamento;
@@ -46,5 +50,12 @@ public class DepartamentoController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(departamento);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoDepartamento dados,
+            @AuthenticationPrincipal Usuario usuario) {
+        DadosDetalhamentoDepartamento dadosDepartamento = departamentoService.atualizar(id, dados, usuario);
+        return ResponseEntity.ok(dadosDepartamento);
     }
 }
