@@ -49,9 +49,9 @@ public class PessoaService {
         public DadosDetalhamentoPessoa cadastrar(DadosCadastroPessoa dadosPessoa, DadosCadastroUsuario dadosUsuario,
                         Usuario usuario) {
                 Departamento departamento = departamentoRepository.findById(dadosPessoa.idDepartamento())
-                                .orElseThrow(() -> new NaoEncontradoException("Departamento não existe"));
+                                .orElseThrow(() -> new NaoEncontradoException("Departamento não existe."));
                 Cargo cargo = cargoRepository.findById(dadosPessoa.idCargo())
-                                .orElseThrow(() -> new NaoEncontradoException("Cargo não existe"));
+                                .orElseThrow(() -> new NaoEncontradoException("Cargo não existe."));
 
                 Pessoa pessoa = new Pessoa(
                                 dadosPessoa.nome(),
@@ -86,4 +86,4 @@ public class PessoaService {
                 pessoa.atualizar(dados, cargoRepository, departamentoRepository);
                 return new DadosDetalhamentoPessoa(pessoa);
         }
-};
+}
