@@ -66,9 +66,8 @@ public class UsuarioService {
         }
 
         String novaSenhaCriptografada = passwordEncoder.encode(dados.novaSenha());
-        usuario.setSenha(novaSenhaCriptografada);
+        usuario.atualizarSenha(novaSenhaCriptografada);
 
-        usuario.atualizarSenha(dados);
         return new DadosDetalhamentoUsuario(usuario);
     }
 }

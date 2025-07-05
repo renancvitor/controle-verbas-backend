@@ -71,9 +71,9 @@ public class Usuario implements UserDetails {
         return pessoa.getEmail();
     }
 
-    public void atualizarSenha(DadosAtualizacaoUsuarioSenha dados) {
-        if (dados.senha() != null) {
-            this.senha = dados.senha();
+    public void atualizarSenha(String senhaCriptografada) {
+        if (senhaCriptografada != null && !senhaCriptografada.isBlank()) {
+            this.senha = senhaCriptografada;
         }
     }
 
