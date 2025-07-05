@@ -8,6 +8,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.api.controleverbasbackend.domain.pessoa.Pessoa;
+import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioSenha;
+import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioTipo;
+import com.api.controleverbasbackend.repository.TipoUsuarioRepository;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -64,5 +67,19 @@ public class Usuario implements UserDetails {
     @Override
     public String getUsername() {
         return pessoa.getEmail();
+    }
+
+    public void atualizarSenha(DadosAtualizacaoUsuarioSenha dados) {
+        if (dados.senha() != null) {
+            this.senha = dados.senha();
+        }
+    }
+
+    public void atualizarUsuarioTipo(DadosAtualizacaoUsuarioTipo dados,
+            TipoUsuarioRepository tipoUsuarioRepository) {
+        if (dados.idTipousuario() != null) {
+            this.tipoUsuario = tipoUsuarioRepository.findById(dados.idTipousuario())
+                    .orElseThrow(() -> new RuntimeException("Tipo de usuário não encontrado."));
+        }
     }
 }
