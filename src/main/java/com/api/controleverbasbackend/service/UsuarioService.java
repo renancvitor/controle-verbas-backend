@@ -33,7 +33,7 @@ public class UsuarioService {
     @Autowired
     private TipoUsuarioRepository tipoUsuarioRepository;
 
-    public Page<DadosListagemUsuario> listar(Pageable pageable) {
+    public Page<DadosListagemUsuario> listar(Pageable pageable, Usuario usuario) {
         return usuarioRepository.findAll(pageable).map(DadosListagemUsuario::new);
     }
 
