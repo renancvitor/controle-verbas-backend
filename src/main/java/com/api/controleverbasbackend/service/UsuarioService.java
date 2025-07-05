@@ -11,8 +11,11 @@ import com.api.controleverbasbackend.domain.pessoa.Pessoa;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioSenha;
 import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
+import com.api.controleverbasbackend.dto.usuario.DadosDetalhamentoUsuario;
 import com.api.controleverbasbackend.dto.usuario.DadosListagemUsuario;
+import com.api.controleverbasbackend.infra.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.TipoUsuarioRepository;
 import com.api.controleverbasbackend.repository.UsuarioRepository;
 
@@ -44,5 +47,28 @@ public class UsuarioService {
         Usuario usuario = new Usuario(senhaCriptografada, pessoa, tipoUsuario);
 
         usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public DadosDetalhamentoUsuario atualizarSenha(Long id, DadosAtualizacaoUsuarioSenha dados, Usuario usuarioLogado) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
+
+        if (!usuarioLogado.getId().equals(id)) {
+            throw new RuntimeException("Você só pode alterar sua própria senha.");
+        }
+
+        if (!passwordEncoder.matches(dados.senhaAtual(), usuario.getSenha())) {
+            throw new ValidacaoException("A senha atual está incorreta.");
+        }
+        if (!dados.novaSenha().equals(dados.confirmarNovaSenha())) {
+            throw new ValidacaoException("A nova senha e a confirmação não coincidem.");
+        }
+
+        String novaSenhaCriptografada = passwordEncoder.encode(dados.novaSenha());
+        usuario.setSenha(novaSenhaCriptografada);
+
+        usuario.atualizarSenha(dados);
+        return new DadosDetalhamentoUsuario(usuario);
     }
 }
