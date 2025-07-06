@@ -90,7 +90,7 @@ public class PessoaService {
         @Transactional
         public void deletar(Long id, Usuario usuario) {
                 Pessoa pessoa = pessoaRepository.findById(id)
-                                .orElseThrow(() -> new EntityNotFoundException());
+                                .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada."));
 
                 if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
                         throw new AutorizacaoException("Apenas o ADMIN pode deletar uma pessoa.");

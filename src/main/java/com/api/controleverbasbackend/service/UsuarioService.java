@@ -89,4 +89,16 @@ public class UsuarioService {
         usuario.atualizarUsuarioTipo(dados, tipoUsuarioRepository);
         return new DadosDetalhamentoUsuario(usuario);
     }
+
+    @Transactional
+    public void deletar(Long id, Usuario usuarioLogado) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
+
+        if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o ADMIN pode deletar um usuário.");
+        }
+
+        usuario.setAtivo(false);
+    }
 }

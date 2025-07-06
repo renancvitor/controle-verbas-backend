@@ -49,10 +49,14 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private TipoUsuarioEntidade tipoUsuario;
 
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
     public Usuario(String senha, Pessoa pessoa, TipoUsuarioEntidade tipoUsuario) {
         this.senha = senha;
         this.pessoa = pessoa;
         this.tipoUsuario = tipoUsuario;
+        this.ativo = true;
     }
 
     @Override
