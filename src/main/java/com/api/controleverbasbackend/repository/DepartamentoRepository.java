@@ -6,13 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.api.controleverbasbackend.domain.cargo.Cargo;
 import com.api.controleverbasbackend.domain.departamento.Departamento;
 
 public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
     Optional<Departamento> findByNome(String nome);
 
-    Page<Cargo> findAllByAtivoTrue(Pageable pageable);
+    Page<Departamento> findAllByAtivoTrue(Pageable pageable);
 
-    Optional<Cargo> findByIdAndAtivoTrue(Long id);
+    Optional<Departamento> findByIdAndAtivoTrue(Long id);
 }

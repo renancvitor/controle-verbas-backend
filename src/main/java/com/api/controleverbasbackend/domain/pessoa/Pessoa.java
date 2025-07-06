@@ -13,10 +13,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "pessoas")
 @Entity(name = "Pessoa")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -45,6 +47,9 @@ public class Pessoa {
 
     private LocalDateTime dataCadastro;
 
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
     public Pessoa(String nome, String cpf, String email, Departamento departamento, Cargo cargo) {
         this.nome = nome;
         this.cpf = cpf;
@@ -52,6 +57,7 @@ public class Pessoa {
         this.departamento = departamento;
         this.cargo = cargo;
         this.dataCadastro = LocalDateTime.now();
+        this.ativo = true;
     }
 
     public void atualizar(DadosAtualizacaoPessoa dados,

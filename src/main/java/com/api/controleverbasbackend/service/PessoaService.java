@@ -42,7 +42,7 @@ public class PessoaService {
 
         @Transactional
         public Page<DadosListagemPessoa> listar(Pageable pageable, Usuario usuario) {
-                return pessoaRepository.findAll(pageable).map(DadosListagemPessoa::new);
+                return pessoaRepository.findAllByAtivoTrue(pageable).map(DadosListagemPessoa::new);
         }
 
         @Transactional
@@ -72,7 +72,7 @@ public class PessoaService {
 
         @Transactional
         public DadosDetalhamentoPessoa atualizar(Long id, DadosAtualizacaoPessoa dados, Usuario usuario) {
-                Pessoa pessoa = pessoaRepository.findById(id)
+                Pessoa pessoa = pessoaRepository.findByIdAndAtivoTrue(id)
                                 .orElseThrow(() -> new EntityNotFoundException(
                                                 "Pessoa com ID " + id + " náo encontrado."));
 
@@ -85,5 +85,17 @@ public class PessoaService {
 
                 pessoa.atualizar(dados, cargoRepository, departamentoRepository);
                 return new DadosDetalhamentoPessoa(pessoa);
+        }
+
+        @Transactional
+        public void deletar(Long id, Usuario usuario) {
+                Pessoa pessoa = pessoaRepository.findById(id)
+                                .orElseThrow(() -> new EntityNotFoundException());
+
+                if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+                        throw new AutorizacaoException("Apenas o ADMIN pode deletar uma pessoa.");
+                }
+
+                pessoa.setAtivo(false);
         }
 }
