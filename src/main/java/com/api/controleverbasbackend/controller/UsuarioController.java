@@ -51,4 +51,10 @@ public class UsuarioController {
         DadosDetalhamentoUsuario dadosUsuario = usuarioService.atualizarUsuarioTipo(id, dados, usuario);
         return ResponseEntity.ok(dadosUsuario);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario Usuario) {
+        usuarioService.deletar(id, Usuario);
+        return ResponseEntity.noContent().build();
+    }
 }
