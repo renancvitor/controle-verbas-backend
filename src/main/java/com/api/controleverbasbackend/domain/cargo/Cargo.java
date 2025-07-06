@@ -13,10 +13,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "cargos")
 @Entity(name = "Cargo")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -29,8 +31,12 @@ public class Cargo {
     @Column(unique = true, nullable = false)
     private String nome;
 
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
     public Cargo(DadosCadastroCargo dados) {
         this.nome = dados.nome();
+        this.ativo = true;
     }
 
     public void atualizar(DadosatualizacaoCargo dados) {

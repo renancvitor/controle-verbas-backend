@@ -30,7 +30,7 @@ public class CargoService {
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode listar cargos cadastrados.");
         }
-        return cargoRepository.findAll(pageable).map(DadosListagemCargo::new);
+        return cargoRepository.findAllByAtivoTrue(pageable).map(DadosListagemCargo::new);
     }
 
     @Transactional
@@ -46,7 +46,7 @@ public class CargoService {
 
     @Transactional
     public DadosDetalhamentoCargo atualizar(Long id, DadosatualizacaoCargo dados, Usuario usuario) {
-        Cargo cargo = cargoRepository.findById(id)
+        Cargo cargo = cargoRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cargo com ID " + id + " não encontrado."));
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
@@ -58,5 +58,17 @@ public class CargoService {
 
         cargo.atualizar(dados);
         return new DadosDetalhamentoCargo(cargo);
+    }
+
+    @Transactional
+    public void deletar(Long id, Usuario usuario) {
+        Cargo cargo = cargoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cargo não encontrado."));
+
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o ADMIN pode deletar um cargo.");
+        }
+
+        cargo.setAtivo(false);
     }
 }
