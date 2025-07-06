@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioSenha;
+import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioTipo;
 import com.api.controleverbasbackend.dto.usuario.DadosDetalhamentoUsuario;
 import com.api.controleverbasbackend.dto.usuario.DadosListagemUsuario;
 import com.api.controleverbasbackend.service.UsuarioService;
@@ -36,10 +37,17 @@ public class UsuarioController {
         return ResponseEntity.ok(page);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/senha/{id}")
     public ResponseEntity atualizarSenha(@PathVariable Long id,
             @RequestBody @Valid DadosAtualizacaoUsuarioSenha dados, @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoUsuario dadosUsuario = usuarioService.atualizarSenha(id, dados, usuario);
+        return ResponseEntity.ok(dadosUsuario);
+    }
+
+    @PutMapping("/tipo/{id}")
+    public ResponseEntity atualizarUsuarioTipo(@PathVariable Long id,
+            @RequestBody @Valid DadosAtualizacaoUsuarioTipo dados, @AuthenticationPrincipal Usuario usuario) {
+        DadosDetalhamentoUsuario dadosUsuario = usuarioService.atualizarUsuarioTipo(id, dados, usuario);
         return ResponseEntity.ok(dadosUsuario);
     }
 }
