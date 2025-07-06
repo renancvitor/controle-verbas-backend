@@ -59,4 +59,16 @@ public class DepartamentoService {
         departamento.atualizar(dados);
         return new DadosDetalhamentoDepartamento(departamento);
     }
+
+    @Transactional
+    public void deletar(Long id, Usuario usuario) {
+        Departamento departamento = departamentoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException());
+
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o ADMIN pode deletar um departamento.");
+        }
+
+        departamento.setAtivo(false);
+    }
 }
