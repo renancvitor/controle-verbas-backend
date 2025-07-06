@@ -74,7 +74,8 @@ public class UsuarioService {
     }
 
     @Transactional
-    public DadosDetalhamentoUsuario atualizarTipo(Long id, DadosAtualizacaoUsuarioTipo dados, Usuario usuarioLogado) {
+    public DadosDetalhamentoUsuario atualizarUsuarioTipo(Long id, DadosAtualizacaoUsuarioTipo dados,
+            Usuario usuarioLogado) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
 
