@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,5 +59,11 @@ public class PessoaController {
             @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoPessoa dadosPessoa = pessoaService.atualizar(id, dados, usuario);
         return ResponseEntity.ok(dadosPessoa);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        pessoaService.deletar(id, usuario);
+        return ResponseEntity.noContent().build();
     }
 }
