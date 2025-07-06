@@ -12,9 +12,11 @@ import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioSenha;
+import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioTipo;
 import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
 import com.api.controleverbasbackend.dto.usuario.DadosDetalhamentoUsuario;
 import com.api.controleverbasbackend.dto.usuario.DadosListagemUsuario;
+import com.api.controleverbasbackend.infra.exception.AutorizacaoException;
 import com.api.controleverbasbackend.infra.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.TipoUsuarioRepository;
 import com.api.controleverbasbackend.repository.UsuarioRepository;
@@ -68,6 +70,22 @@ public class UsuarioService {
         String novaSenhaCriptografada = passwordEncoder.encode(dados.novaSenha());
         usuario.atualizarSenha(novaSenhaCriptografada);
 
+        return new DadosDetalhamentoUsuario(usuario);
+    }
+
+    @Transactional
+    public DadosDetalhamentoUsuario atualizarTipo(Long id, DadosAtualizacaoUsuarioTipo dados, Usuario usuarioLogado) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
+
+        if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o admin pode atualizar pessoas.");
+        }
+        if (usuario.getTipoUsuario().getId() == null) {
+            throw new ValidacaoException("O tipo do usuário deve ser preenchido corretamente.");
+        }
+
+        usuario.atualizarUsuarioTipo(dados, tipoUsuarioRepository);
         return new DadosDetalhamentoUsuario(usuario);
     }
 }
