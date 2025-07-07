@@ -35,8 +35,13 @@ public class UsuarioService {
     @Autowired
     private TipoUsuarioRepository tipoUsuarioRepository;
 
-    public Page<DadosListagemUsuario> listar(Pageable pageable, Usuario usuario) {
-        return usuarioRepository.findAllByAtivoTrue(pageable).map(DadosListagemUsuario::new);
+    public Page<DadosListagemUsuario> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o admin pode listar usuários cadastrados.");
+        }
+
+        Boolean filtro = (ativo != null) ? ativo : true;
+        return usuarioRepository.findAllByAtivo(filtro, pageable).map(DadosListagemUsuario::new);
     }
 
     @Transactional
@@ -76,7 +81,7 @@ public class UsuarioService {
     @Transactional
     public DadosDetalhamentoUsuario atualizarUsuarioTipo(Long id, DadosAtualizacaoUsuarioTipo dados,
             Usuario usuarioLogado) {
-        Usuario usuario = usuarioRepository.findById(id)
+        Usuario usuario = usuarioRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
 
         if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
@@ -92,7 +97,7 @@ public class UsuarioService {
 
     @Transactional
     public void deletar(Long id, Usuario usuarioLogado) {
-        Usuario usuario = usuarioRepository.findById(id)
+        Usuario usuario = usuarioRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
 
         if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {

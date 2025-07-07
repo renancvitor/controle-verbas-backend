@@ -43,7 +43,7 @@ public class PessoaService {
         @Transactional
         public Page<DadosListagemPessoa> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
                 if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-                        throw new AutorizacaoException("Apenas o admin pode listar derpatamentos cadastrados.");
+                        throw new AutorizacaoException("Apenas o admin pode listar pessoas cadastradas.");
                 }
 
                 Boolean filtro = (ativo != null) ? ativo : true;
@@ -53,9 +53,9 @@ public class PessoaService {
         @Transactional
         public DadosDetalhamentoPessoa cadastrar(DadosCadastroPessoa dadosPessoa, DadosCadastroUsuario dadosUsuario,
                         Usuario usuario) {
-                Departamento departamento = departamentoRepository.findById(dadosPessoa.idDepartamento())
+                Departamento departamento = departamentoRepository.findByIdAndAtivoTrue(dadosPessoa.idDepartamento())
                                 .orElseThrow(() -> new NaoEncontradoException("Departamento não existe."));
-                Cargo cargo = cargoRepository.findById(dadosPessoa.idCargo())
+                Cargo cargo = cargoRepository.findByIdAndAtivoTrue(dadosPessoa.idCargo())
                                 .orElseThrow(() -> new NaoEncontradoException("Cargo não existe."));
 
                 Pessoa pessoa = new Pessoa(
