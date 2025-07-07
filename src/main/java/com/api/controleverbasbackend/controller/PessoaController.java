@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,9 +36,9 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemPessoa>> listar(
+    public ResponseEntity<Page<DadosListagemPessoa>> listar(@RequestParam(required = false) Boolean ativo,
             @PageableDefault(size = 20, sort = ("nome")) Pageable pageable, @AuthenticationPrincipal Usuario usuario) {
-        Page<DadosListagemPessoa> page = pessoaService.listar(pageable, usuario);
+        Page<DadosListagemPessoa> page = pessoaService.listar(pageable, usuario, ativo);
         return ResponseEntity.ok(page);
     }
 

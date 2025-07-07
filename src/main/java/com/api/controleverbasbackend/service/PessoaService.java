@@ -41,8 +41,13 @@ public class PessoaService {
         private UsuarioService usuarioService;
 
         @Transactional
-        public Page<DadosListagemPessoa> listar(Pageable pageable, Usuario usuario) {
-                return pessoaRepository.findAllByAtivoTrue(pageable).map(DadosListagemPessoa::new);
+        public Page<DadosListagemPessoa> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
+                if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+                        throw new AutorizacaoException("Apenas o admin pode listar derpatamentos cadastrados.");
+                }
+
+                Boolean filtro = (ativo != null) ? ativo : true;
+                return pessoaRepository.findAllByAtivo(filtro, pageable).map(DadosListagemPessoa::new);
         }
 
         @Transactional
@@ -89,7 +94,7 @@ public class PessoaService {
 
         @Transactional
         public void deletar(Long id, Usuario usuario) {
-                Pessoa pessoa = pessoaRepository.findById(id)
+                Pessoa pessoa = pessoaRepository.findByIdAndAtivoTrue(id)
                                 .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada."));
 
                 if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
