@@ -106,4 +106,16 @@ public class UsuarioService {
 
         usuario.setAtivo(false);
     }
+
+    @Transactional
+    public void ativar(Long id, Usuario usuarioLogado) {
+        Usuario usuario = usuarioRepository.findByIdAndAtivoTrue(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
+
+        if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o ADMIN pode ativar um usuário.");
+        }
+
+        usuario.setAtivo(true);
+    }
 }
