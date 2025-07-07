@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.api.controleverbasbackend.domain.usuario.Usuario;
-import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
@@ -36,9 +36,9 @@ public class DepartamentoController {
     private DepartamentoService departamentoService;
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemDepartamento>> listar(
+    public ResponseEntity<Page<DadosListagemDepartamento>> listar(@RequestParam(required = false) Boolean ativo,
             @PageableDefault(size = 20, sort = ("nome")) Pageable pageable, @AuthenticationPrincipal Usuario usuario) {
-        Page<DadosListagemDepartamento> page = departamentoService.listar(pageable, usuario);
+        Page<DadosListagemDepartamento> page = departamentoService.listar(pageable, usuario, ativo);
         return ResponseEntity.ok(page);
     }
 
@@ -63,6 +63,12 @@ public class DepartamentoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         departamentoService.deletar(id, usuario);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/ativar")
+    public ResponseEntity<Void> ativar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        departamentoService.ativar(id, usuario);
         return ResponseEntity.noContent().build();
     }
 }

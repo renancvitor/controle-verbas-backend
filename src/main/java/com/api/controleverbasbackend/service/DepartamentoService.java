@@ -26,11 +26,13 @@ public class DepartamentoService {
     private DepartamentoRepository departamentoRepository;
 
     @Transactional
-    public Page<DadosListagemDepartamento> listar(Pageable pageable, Usuario usuario) {
+    public Page<DadosListagemDepartamento> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode listar derpatamentos cadastrados.");
         }
-        return departamentoRepository.findAllByAtivoTrue(pageable).map(DadosListagemDepartamento::new);
+
+        Boolean filtro = (ativo != null) ? ativo : true;
+        return departamentoRepository.findAllByAtivo(filtro, pageable).map(DadosListagemDepartamento::new);
     }
 
     @Transactional
@@ -62,7 +64,7 @@ public class DepartamentoService {
 
     @Transactional
     public void deletar(Long id, Usuario usuario) {
-        Departamento departamento = departamentoRepository.findById(id)
+        Departamento departamento = departamentoRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Departamento não encontrado."));
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
@@ -70,5 +72,17 @@ public class DepartamentoService {
         }
 
         departamento.setAtivo(false);
+    }
+
+    @Transactional
+    public void ativar(Long id, Usuario usuario) {
+        Departamento departamento = departamentoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Departamento não encontrado."));
+
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o ADMIN pode ativar um departamento.");
+        }
+
+        departamento.setAtivo(true);
     }
 }
