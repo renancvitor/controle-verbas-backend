@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> findByPessoaEmail(String email);
+    Optional<Usuario> findByPessoaEmailAndAtivoTrue(String email);
 
     Page<Usuario> findAllByAtivoTrue(Pageable pageable);
 
