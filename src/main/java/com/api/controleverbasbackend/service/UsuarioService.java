@@ -36,7 +36,7 @@ public class UsuarioService {
     private TipoUsuarioRepository tipoUsuarioRepository;
 
     public Page<DadosListagemUsuario> listar(Pageable pageable, Usuario usuario) {
-        return usuarioRepository.findAll(pageable).map(DadosListagemUsuario::new);
+        return usuarioRepository.findAllByAtivoTrue(pageable).map(DadosListagemUsuario::new);
     }
 
     @Transactional
@@ -53,7 +53,7 @@ public class UsuarioService {
 
     @Transactional
     public DadosDetalhamentoUsuario atualizarSenha(Long id, DadosAtualizacaoUsuarioSenha dados, Usuario usuarioLogado) {
-        Usuario usuario = usuarioRepository.findById(id)
+        Usuario usuario = usuarioRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
 
         if (!usuarioLogado.getId().equals(id)) {

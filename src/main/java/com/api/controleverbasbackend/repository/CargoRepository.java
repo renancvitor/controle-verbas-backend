@@ -14,4 +14,6 @@ public interface CargoRepository extends JpaRepository<Cargo, Long> {
     Page<Cargo> findAllByAtivoTrue(Pageable pageable);
 
     Optional<Cargo> findByIdAndAtivoTrue(Long id);
+
+    Page<Cargo> findAllByAtivo(Boolean ativo, Pageable pageable);
 }

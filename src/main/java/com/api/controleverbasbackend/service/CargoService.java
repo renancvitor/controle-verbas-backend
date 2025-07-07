@@ -26,11 +26,12 @@ public class CargoService {
     private CargoRepository cargoRepository;
 
     @Transactional
-    public Page<DadosListagemCargo> listar(Pageable pageable, Usuario usuario) {
+    public Page<DadosListagemCargo> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode listar cargos cadastrados.");
         }
-        return cargoRepository.findAllByAtivoTrue(pageable).map(DadosListagemCargo::new);
+        Boolean filtro = (ativo != null) ? ativo : true;
+        return cargoRepository.findAllByAtivo(filtro, pageable).map(DadosListagemCargo::new);
     }
 
     @Transactional

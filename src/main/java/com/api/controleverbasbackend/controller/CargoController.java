@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,10 +36,10 @@ public class CargoController {
     private CargoService cargoService;
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemCargo>> listar(
+    public ResponseEntity<Page<DadosListagemCargo>> listar(@RequestParam(required = false) Boolean ativo,
             @PageableDefault(size = 20, sort = ("nome")) Pageable pageable, @AuthenticationPrincipal Usuario usuario) {
 
-        Page<DadosListagemCargo> page = cargoService.listar(pageable, usuario);
+        Page<DadosListagemCargo> page = cargoService.listar(pageable, usuario, ativo);
         return ResponseEntity.ok(page);
     }
 
