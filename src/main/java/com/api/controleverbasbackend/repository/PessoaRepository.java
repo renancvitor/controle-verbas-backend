@@ -15,5 +15,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
     Optional<Pessoa> findByIdAndAtivoTrue(Long id);
 
+    Optional<Pessoa> findByIdAndAtivoFalse(Long id);
+
     Page<Pessoa> findAllByAtivo(Boolean ativo, Pageable pageable);
 }

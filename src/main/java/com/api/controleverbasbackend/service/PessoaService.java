@@ -98,7 +98,7 @@ public class PessoaService {
                                 .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada."));
 
                 if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-                        throw new AutorizacaoException("Apenas o ADMIN pode deletar uma pessoa.");
+                        throw new AutorizacaoException("Apenas o admin pode deletar uma pessoa.");
                 }
 
                 pessoa.setAtivo(false);
@@ -106,11 +106,11 @@ public class PessoaService {
 
         @Transactional
         public void ativar(Long id, Usuario usuario) {
-                Pessoa pessoa = pessoaRepository.findById(id)
+                Pessoa pessoa = pessoaRepository.findByIdAndAtivoFalse(id)
                                 .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada."));
 
                 if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-                        throw new AutorizacaoException("Apenas o ADMIN pode ativar uma pessoa.");
+                        throw new AutorizacaoException("Apenas o admin pode ativar uma pessoa.");
                 }
 
                 pessoa.setAtivo(true);

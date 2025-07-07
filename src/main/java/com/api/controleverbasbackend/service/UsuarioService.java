@@ -101,7 +101,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
 
         if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-            throw new AutorizacaoException("Apenas o ADMIN pode deletar um usuário.");
+            throw new AutorizacaoException("Apenas o admin pode deletar um usuário.");
         }
 
         usuario.setAtivo(false);
@@ -113,7 +113,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
 
         if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-            throw new AutorizacaoException("Apenas o ADMIN pode ativar um usuário.");
+            throw new AutorizacaoException("Apenas o admin pode ativar um usuário.");
         }
 
         usuario.setAtivo(true);

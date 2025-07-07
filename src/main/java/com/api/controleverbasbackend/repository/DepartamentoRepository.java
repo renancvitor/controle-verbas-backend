@@ -15,5 +15,7 @@ public interface DepartamentoRepository extends JpaRepository<Departamento, Long
 
     Optional<Departamento> findByIdAndAtivoTrue(Long id);
 
+    Optional<Departamento> findByIdAndAtivoFalse(Long id);
+
     Page<Departamento> findAllByAtivo(Boolean ativo, Pageable pageable);
 }

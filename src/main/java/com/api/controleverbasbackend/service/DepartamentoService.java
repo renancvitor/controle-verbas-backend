@@ -68,7 +68,7 @@ public class DepartamentoService {
                 .orElseThrow(() -> new EntityNotFoundException("Departamento não encontrado."));
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-            throw new AutorizacaoException("Apenas o ADMIN pode deletar um departamento.");
+            throw new AutorizacaoException("Apenas o admin pode deletar um departamento.");
         }
 
         departamento.setAtivo(false);
@@ -76,11 +76,11 @@ public class DepartamentoService {
 
     @Transactional
     public void ativar(Long id, Usuario usuario) {
-        Departamento departamento = departamentoRepository.findById(id)
+        Departamento departamento = departamentoRepository.findByIdAndAtivoFalse(id)
                 .orElseThrow(() -> new EntityNotFoundException("Departamento não encontrado."));
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-            throw new AutorizacaoException("Apenas o ADMIN pode ativar um departamento.");
+            throw new AutorizacaoException("Apenas o admin pode ativar um departamento.");
         }
 
         departamento.setAtivo(true);

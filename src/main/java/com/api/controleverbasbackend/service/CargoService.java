@@ -68,7 +68,7 @@ public class CargoService {
                 .orElseThrow(() -> new EntityNotFoundException("Cargo não encontrado."));
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-            throw new AutorizacaoException("Apenas o ADMIN pode deletar um cargo.");
+            throw new AutorizacaoException("Apenas o admin pode deletar um cargo.");
         }
 
         cargo.setAtivo(false);
@@ -76,11 +76,11 @@ public class CargoService {
 
     @Transactional
     public void ativar(Long id, Usuario usuario) {
-        Cargo cargo = cargoRepository.findById(id)
+        Cargo cargo = cargoRepository.findByIdAndAtivoFalse(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cargo não encontrado."));
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
-            throw new AutorizacaoException("Apenas o ADMIN pode ativar um cargo.");
+            throw new AutorizacaoException("Apenas o admin pode ativar um cargo.");
         }
 
         cargo.setAtivo(true);
