@@ -72,4 +72,16 @@ public class CargoService {
 
         cargo.setAtivo(false);
     }
+
+    @Transactional
+    public void ativar(Long id, Usuario usuario) {
+        Cargo cargo = cargoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cargo não encontrado."));
+
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+            throw new AutorizacaoException("Apenas o ADMIN pode reativar um cargo.");
+        }
+
+        cargo.setAtivo(true);
+    }
 }
