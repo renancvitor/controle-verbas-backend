@@ -67,4 +67,10 @@ public class PessoaController {
         pessoaService.deletar(id, usuario);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/ativar")
+    public ResponseEntity<Void> ativar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        pessoaService.ativar(id, usuario);
+        return ResponseEntity.noContent().build();
+    }
 }
