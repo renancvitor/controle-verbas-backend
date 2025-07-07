@@ -103,4 +103,16 @@ public class PessoaService {
 
                 pessoa.setAtivo(false);
         }
+
+        @Transactional
+        public void ativar(Long id, Usuario usuario) {
+                Pessoa pessoa = pessoaRepository.findById(id)
+                                .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada."));
+
+                if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+                        throw new AutorizacaoException("Apenas o ADMIN pode ativar uma pessoa.");
+                }
+
+                pessoa.setAtivo(true);
+        }
 }
