@@ -33,9 +33,16 @@ public class Orcamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String fornecedor;
+
+    @Column(nullable = false)
     private String descricao;
+
+    @Column(nullable = false)
     private String formaPagamento;
+
+    @Column(nullable = false)
     private Double valorTotal;
     private String observacoesGerais;
 
