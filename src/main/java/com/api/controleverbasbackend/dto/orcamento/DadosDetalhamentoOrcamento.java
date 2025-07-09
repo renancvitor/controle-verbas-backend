@@ -1,5 +1,6 @@
 package com.api.controleverbasbackend.dto.orcamento;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.api.controleverbasbackend.domain.orcamento.Orcamento;
@@ -9,7 +10,7 @@ public record DadosDetalhamentoOrcamento(
         String fornecedor,
         String descricao,
         String formaPagamento,
-        Double valorTotal,
+        BigDecimal valorTotal,
         String observacoesGerais,
         String solicitanteNome,
         String gestorNome,

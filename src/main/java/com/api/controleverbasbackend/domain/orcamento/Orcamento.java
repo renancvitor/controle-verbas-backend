@@ -1,5 +1,6 @@
 package com.api.controleverbasbackend.domain.orcamento;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.api.controleverbasbackend.domain.usuario.Usuario;
@@ -41,12 +42,13 @@ public class Orcamento {
     @Column(nullable = false)
     private String formaPagamento;
 
-    @Column(nullable = false)
-    private Double valorTotal;
+    @Column(name = "valor_total", precision = 15, scale = 2)
+    private BigDecimal valorTotal;
+
     private String observacoesGerais;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "solicitante_id", nullable = false, unique = true)
+    @JoinColumn(name = "solicitante_id", nullable = false)
     private Usuario solicitante;
 
     @OneToOne(optional = true)
