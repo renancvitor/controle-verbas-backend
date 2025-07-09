@@ -1,5 +1,7 @@
 package com.api.controleverbasbackend.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +30,7 @@ public class OrcamentoService {
     StatusOrcamentoRepository statusOrcamentoRepository;
 
     @Transactional
-    public Page<DadosListagemOrcamento> listar(Pageable pageable, Usuario usuarioLogado) {
+    public Page<DadosListagemOrcamento> listar(Pageable pageable, Usuario usuarioLogado, Optional<Integer> statusId) {
         Integer idTipoUsuario = usuarioLogado.getTipoUsuario().getId();
         Long idUsuario = usuarioLogado.getId();
 
@@ -38,13 +40,32 @@ public class OrcamentoService {
 
         if (idTipoUsuario.equals(TipoUsuarioEnum.ADMIN.getId())
                 || idTipoUsuario.equals(TipoUsuarioEnum.GESTOR.getId())) {
+            if (statusId.isPresent()) {
+                return orcamentoRepository.findByStatusOrcamentoEntidadeId(statusId.get(), pageable)
+                        .map(DadosListagemOrcamento::new);
+            }
             return orcamentoRepository.findAll(pageable).map(DadosListagemOrcamento::new);
 
         } else if (idTipoUsuario.equals(TipoUsuarioEnum.TESOUREIRO.getId())) {
+            if (statusId.isPresent()) {
+                return orcamentoRepository.findAprovadosOuPropriosFiltrandoStatus(
+                        idUsuario,
+                        statusId.get(),
+                        APROVADO,
+                        ENVIADO,
+                        REPROVADO,
+                        pageable).map(DadosListagemOrcamento::new);
+            }
             return orcamentoRepository.findAprovadosOuPropriosNaoAprovados(
                     idUsuario, APROVADO, ENVIADO, REPROVADO, pageable).map(DadosListagemOrcamento::new);
 
         } else if (idTipoUsuario.equals(TipoUsuarioEnum.COMUM.getId())) {
+            if (statusId.isPresent()) {
+                return orcamentoRepository.findBySolicitanteIdAndStatusOrcamentoEntidadeId(
+                        idUsuario,
+                        statusId.get(),
+                        pageable).map(DadosListagemOrcamento::new);
+            }
             return orcamentoRepository.findBySolicitanteId(idUsuario, pageable)
                     .map(DadosListagemOrcamento::new);
         }
