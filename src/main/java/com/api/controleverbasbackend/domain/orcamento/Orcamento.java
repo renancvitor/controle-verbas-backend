@@ -2,8 +2,6 @@ package com.api.controleverbasbackend.domain.orcamento;
 
 import java.time.LocalDate;
 
-import org.springframework.cglib.core.Local;
-
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 
 import jakarta.persistence.Column;
