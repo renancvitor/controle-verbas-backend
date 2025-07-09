@@ -3,6 +3,7 @@ package com.api.controleverbasbackend.domain.orcamento;
 import java.time.LocalDate;
 
 import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -60,7 +61,15 @@ public class Orcamento {
     @JoinColumn(name = "status_orcamento_id", nullable = false)
     private StatusOrcamentoEntidade statusOrcamentoEntidade;
 
-    private LocalDate dataCriacao;
+    private LocalDate dataCriacao = LocalDate.now();
     private LocalDate dataAnalise;
     private LocalDate dataLiberacaoVerba;
+
+    public Orcamento(DadosCadastroOrcamento dados) {
+        this.fornecedor = dados.fornecedor();
+        this.descricao = dados.descricao();
+        this.formaPagamento = dados.formaPagamento();
+        this.valorTotal = dados.valorTotal();
+        this.observacoesGerais = dados.observacoesGerais();
+    }
 }
