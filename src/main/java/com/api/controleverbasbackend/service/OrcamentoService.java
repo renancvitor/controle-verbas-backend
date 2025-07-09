@@ -1,5 +1,6 @@
 package com.api.controleverbasbackend.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosDetalhamentoOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosListagemOrcamento;
+import com.api.controleverbasbackend.infra.exception.AutorizacaoException;
 import com.api.controleverbasbackend.infra.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.OrcamentoRepository;
 import com.api.controleverbasbackend.repository.StatusOrcamentoRepository;
@@ -84,6 +86,24 @@ public class OrcamentoService {
                 .orElseThrow(() -> new ValidacaoException("Status inicial não encontrado."));
 
         orcamento.setStatusOrcamentoEntidade(status);
+
+        orcamentoRepository.save(orcamento);
+        return new DadosDetalhamentoOrcamento(orcamento);
+    }
+
+    @Transactional
+    public DadosDetalhamentoOrcamento aprovar(Long id, Usuario usuario) {
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.GESTOR.getId())) {
+            throw new AutorizacaoException("Apenas o gestor pode aprovar solicitaçöes.");
+        }
+
+        Orcamento orcamento = orcamentoRepository.getReferenceById(id);
+
+        StatusOrcamentoEntidade status = statusOrcamentoRepository.findById(StatusOrcamentoEnum.APROVADO.getId())
+                .orElseThrow(() -> new ValidacaoException("Status APROVADO não encontrado."));
+        orcamento.setStatusOrcamentoEntidade(status);
+        orcamento.setDataAnalise(LocalDate.now());
+        orcamento.setGestor(usuario);
 
         orcamentoRepository.save(orcamento);
         return new DadosDetalhamentoOrcamento(orcamento);
