@@ -65,6 +65,9 @@ public class Orcamento {
 
     private LocalDate dataCriacao = LocalDate.now();
     private LocalDate dataAnalise;
+
+    @Column(name = "verba_liberada", nullable = false)
+    private Boolean verbaLiberada = false;
     private LocalDate dataLiberacaoVerba;
 
     public Orcamento(DadosCadastroOrcamento dados) {
@@ -73,5 +76,10 @@ public class Orcamento {
         this.formaPagamento = dados.formaPagamento();
         this.valorTotal = dados.valorTotal();
         this.observacoesGerais = dados.observacoesGerais();
+        this.verbaLiberada = false;
+    }
+
+    public String getVerbaLiberadaFormatado() {
+        return Boolean.TRUE.equals(this.verbaLiberada) ? "Sim" : "Não";
     }
 }
