@@ -18,6 +18,7 @@ public record DadosListagemOrcamento(
         String status,
         LocalDate dataCriacao,
         LocalDate dataAnalise,
+        String verbaLiberada,
         LocalDate dataLiberacaoVerba) {
 
     public DadosListagemOrcamento(Orcamento orcamento) {
@@ -34,6 +35,7 @@ public record DadosListagemOrcamento(
                 orcamento.getStatusOrcamentoEntidade().getNome(),
                 orcamento.getDataCriacao(),
                 orcamento.getDataAnalise(),
+                orcamento.getVerbaLiberadaFormatado(),
                 orcamento.getDataLiberacaoVerba());
     }
 }
