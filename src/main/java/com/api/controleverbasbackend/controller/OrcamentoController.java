@@ -69,4 +69,10 @@ public class OrcamentoController {
         DadosDetalhamentoOrcamento dados = orcamentoService.reprovar(id, usuario);
         return ResponseEntity.ok(dados);
     }
+
+    @PutMapping("/{id}/liberar_verba")
+    public ResponseEntity<Void> liberarVerba(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        orcamentoService.liberarVerba(id, usuario);
+        return ResponseEntity.noContent().build();
+    }
 }
