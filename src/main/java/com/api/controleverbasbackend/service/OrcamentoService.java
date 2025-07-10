@@ -130,7 +130,7 @@ public class OrcamentoService {
     }
 
     @Transactional
-    public void liberarVerba(Long id, Usuario usuario) {
+    public DadosDetalhamentoOrcamento liberarVerba(Long id, Usuario usuario) {
         Orcamento orcamento = orcamentoRepository.findByIdAndVerbaLiberadaFalse(id)
                 .orElseThrow(() -> new EntityNotFoundException("Orçamento não encontrado."));
 
@@ -140,5 +140,6 @@ public class OrcamentoService {
         }
 
         orcamento.setVerbaLiberada(true);
+        return new DadosDetalhamentoOrcamento(orcamento);
     }
 }

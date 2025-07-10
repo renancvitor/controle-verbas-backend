@@ -71,8 +71,9 @@ public class OrcamentoController {
     }
 
     @PutMapping("/{id}/liberar_verba")
-    public ResponseEntity<Void> liberarVerba(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
-        orcamentoService.liberarVerba(id, usuario);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<DadosDetalhamentoOrcamento> liberarVerba(@PathVariable Long id,
+            @AuthenticationPrincipal Usuario usuario) {
+        DadosDetalhamentoOrcamento dados = orcamentoService.liberarVerba(id, usuario);
+        return ResponseEntity.ok(dados);
     }
 }
