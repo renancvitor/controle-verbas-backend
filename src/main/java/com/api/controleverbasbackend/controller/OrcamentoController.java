@@ -61,4 +61,12 @@ public class OrcamentoController {
         DadosDetalhamentoOrcamento dados = orcamentoService.aprovar(id, usuario);
         return ResponseEntity.ok(dados);
     }
+
+    @PutMapping("/{id}/reprovar")
+    public ResponseEntity<DadosDetalhamentoOrcamento> reprovar(@PathVariable Long id,
+            @AuthenticationPrincipal Usuario usuario) {
+
+        DadosDetalhamentoOrcamento dados = orcamentoService.reprovar(id, usuario);
+        return ResponseEntity.ok(dados);
+    }
 }
