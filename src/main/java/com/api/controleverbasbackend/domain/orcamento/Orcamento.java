@@ -80,6 +80,6 @@ public class Orcamento {
     }
 
     public String getVerbaLiberadaFormatado() {
-        return Boolean.TRUE.equals(this.verbaLiberada) ? "Sim" : "Não";
+        return this.verbaLiberada ? "Sim" : "Não";
     }
 }

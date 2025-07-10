@@ -136,10 +136,15 @@ public class OrcamentoService {
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.GESTOR.getId())
                 && !usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESOUREIRO.getId())) {
-            throw new AutorizacaoException("Apenas o gestou ou o tesoureiro podem liberar verbas.");
+            throw new AutorizacaoException("Apenas o gestor ou o tesoureiro podem liberar verbas.");
+        }
+
+        if (!orcamento.getStatusOrcamentoEntidade().getId().equals(StatusOrcamentoEnum.APROVADO.getId())) {
+            throw new ValidacaoException("Apenas orçamentos com status APROVADO podem ter verba liberada.");
         }
 
         orcamento.setVerbaLiberada(true);
+        orcamento.setTesoureiro(usuario);
         return new DadosDetalhamentoOrcamento(orcamento);
     }
 }
