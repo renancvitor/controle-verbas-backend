@@ -94,13 +94,31 @@ public class OrcamentoService {
     @Transactional
     public DadosDetalhamentoOrcamento aprovar(Long id, Usuario usuario) {
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.GESTOR.getId())) {
-            throw new AutorizacaoException("Apenas o gestor pode aprovar solicitaçöes.");
+            throw new AutorizacaoException("Apenas o gestor pode aprovar orçamentos.");
         }
 
         Orcamento orcamento = orcamentoRepository.getReferenceById(id);
 
         StatusOrcamentoEntidade status = statusOrcamentoRepository.findById(StatusOrcamentoEnum.APROVADO.getId())
                 .orElseThrow(() -> new ValidacaoException("Status APROVADO não encontrado."));
+        orcamento.setStatusOrcamentoEntidade(status);
+        orcamento.setDataAnalise(LocalDate.now());
+        orcamento.setGestor(usuario);
+
+        orcamentoRepository.save(orcamento);
+        return new DadosDetalhamentoOrcamento(orcamento);
+    }
+
+    @Transactional
+    public DadosDetalhamentoOrcamento reprovar(Long id, Usuario usuario) {
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.GESTOR.getId())) {
+            throw new AutorizacaoException("Apenas o gestor pode reprovar orçamentos.");
+        }
+
+        Orcamento orcamento = orcamentoRepository.getReferenceById(id);
+
+        StatusOrcamentoEntidade status = statusOrcamentoRepository.findById(StatusOrcamentoEnum.REPROVADO.getId())
+                .orElseThrow(() -> new ValidacaoException("Status REPROVADO não encontrado."));
         orcamento.setStatusOrcamentoEntidade(status);
         orcamento.setDataAnalise(LocalDate.now());
         orcamento.setGestor(usuario);
