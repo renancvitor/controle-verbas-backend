@@ -22,6 +22,8 @@ import com.api.controleverbasbackend.infra.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.OrcamentoRepository;
 import com.api.controleverbasbackend.repository.StatusOrcamentoRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class OrcamentoService {
 
@@ -125,5 +127,18 @@ public class OrcamentoService {
 
         orcamentoRepository.save(orcamento);
         return new DadosDetalhamentoOrcamento(orcamento);
+    }
+
+    @Transactional
+    public void liberarVerba(Long id, Usuario usuario) {
+        Orcamento orcamento = orcamentoRepository.findByIdAndVerbaLiberadaFalse(id)
+                .orElseThrow(() -> new EntityNotFoundException("Orçamento não encontrado."));
+
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.GESTOR.getId())
+                && !usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESOUREIRO.getId())) {
+            throw new AutorizacaoException("Apenas o gestou ou o tesoureiro podem liberar verbas.");
+        }
+
+        orcamento.setVerbaLiberada(true);
     }
 }
