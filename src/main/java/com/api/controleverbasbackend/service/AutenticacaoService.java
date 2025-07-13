@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.autenticacao.DadosLogin;
+import com.api.controleverbasbackend.dto.autenticacao.DadosTokenJWT;
+import com.api.controleverbasbackend.dto.usuario.DadosResumidoUsuario;
 import com.api.controleverbasbackend.repository.UsuarioRepository;
 
 @Service
@@ -28,10 +30,15 @@ public class AutenticacaoService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
     }
 
-    public String autenticacao(DadosLogin dados, AuthenticationManager manager) {
+    public DadosTokenJWT autenticacao(DadosLogin dados, AuthenticationManager manager) {
         var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
         Authentication autenticacao = manager.authenticate(token);
 
-        return tokenService.gerarToken((Usuario) autenticacao.getPrincipal());
+        Usuario usuario = (Usuario) autenticacao.getPrincipal();
+        String jwt = tokenService.gerarToken(usuario);
+
+        DadosResumidoUsuario usuarioDTO = new DadosResumidoUsuario(usuario);
+
+        return new DadosTokenJWT(jwt, usuarioDTO);
     }
 }
