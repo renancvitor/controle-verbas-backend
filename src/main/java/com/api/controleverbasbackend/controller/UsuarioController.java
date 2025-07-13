@@ -25,7 +25,7 @@ import com.api.controleverbasbackend.service.UsuarioService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
