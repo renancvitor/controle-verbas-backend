@@ -144,6 +144,7 @@ public class OrcamentoService {
         }
 
         orcamento.setVerbaLiberada(true);
+        orcamento.setDataLiberacaoVerba(LocalDate.now());
         orcamento.setTesoureiro(usuario);
         return new DadosDetalhamentoOrcamento(orcamento);
     }
