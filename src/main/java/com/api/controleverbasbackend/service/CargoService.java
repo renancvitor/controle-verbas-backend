@@ -31,8 +31,11 @@ public class CargoService {
             throw new AutorizacaoException("Apenas o admin pode listar cargos cadastrados.");
         }
 
-        Boolean filtro = (ativo != null) ? ativo : true;
-        return cargoRepository.findAllByAtivo(filtro, pageable).map(DadosListagemCargo::new);
+        if (ativo != null) {
+            return cargoRepository.findAllByAtivo(ativo, pageable).map(DadosListagemCargo::new);
+        }
+
+        return cargoRepository.findAll(pageable).map(DadosListagemCargo::new);
     }
 
     @Transactional
