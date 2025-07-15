@@ -31,8 +31,10 @@ public class DepartamentoService {
             throw new AutorizacaoException("Apenas o admin pode listar derpatamentos cadastrados.");
         }
 
-        Boolean filtro = (ativo != null) ? ativo : true;
-        return departamentoRepository.findAllByAtivo(filtro, pageable).map(DadosListagemDepartamento::new);
+        if (ativo != null) {
+            return departamentoRepository.findAllByAtivo(ativo, pageable).map(DadosListagemDepartamento::new);
+        }
+        return departamentoRepository.findAll(pageable).map(DadosListagemDepartamento::new);
     }
 
     @Transactional
