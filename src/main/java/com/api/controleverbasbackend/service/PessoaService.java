@@ -46,8 +46,10 @@ public class PessoaService {
                         throw new AutorizacaoException("Apenas o admin pode listar pessoas cadastradas.");
                 }
 
-                Boolean filtro = (ativo != null) ? ativo : true;
-                return pessoaRepository.findAllByAtivo(filtro, pageable).map(DadosListagemPessoa::new);
+                if (ativo != null) {
+                        return pessoaRepository.findAllByAtivo(ativo, pageable).map(DadosListagemPessoa::new);
+                }
+                return pessoaRepository.findAll(pageable).map(DadosListagemPessoa::new);
         }
 
         @Transactional
