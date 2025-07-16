@@ -40,8 +40,10 @@ public class UsuarioService {
             throw new AutorizacaoException("Apenas o admin pode listar usuários cadastrados.");
         }
 
-        Boolean filtro = (ativo != null) ? ativo : true;
-        return usuarioRepository.findAllByAtivo(filtro, pageable).map(DadosListagemUsuario::new);
+        if (ativo != null) {
+            return usuarioRepository.findAllByAtivo(ativo, pageable).map(DadosListagemUsuario::new);
+        }
+        return usuarioRepository.findAll(pageable).map(DadosListagemUsuario::new);
     }
 
     @Transactional
