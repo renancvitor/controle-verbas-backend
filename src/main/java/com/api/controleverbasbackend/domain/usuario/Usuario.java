@@ -82,8 +82,8 @@ public class Usuario implements UserDetails {
 
     public void atualizarUsuarioTipo(DadosAtualizacaoUsuarioTipo dados,
             TipoUsuarioRepository tipoUsuarioRepository) {
-        if (dados.idTipousuario() != null) {
-            this.tipoUsuario = tipoUsuarioRepository.findById(dados.idTipousuario())
+        if (dados.idTipoUsuario() != null) {
+            this.tipoUsuario = tipoUsuarioRepository.findById(dados.idTipoUsuario())
                     .orElseThrow(() -> new RuntimeException("Tipo de usuário não encontrado."));
         }
     }

@@ -1,4 +1,4 @@
 package com.api.controleverbasbackend.dto.usuario;
 
-public record DadosAtualizacaoUsuarioTipo(Integer idTipousuario) {
+public record DadosAtualizacaoUsuarioTipo(Integer idTipoUsuario) {
 }
