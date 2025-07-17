@@ -39,7 +39,7 @@ public class UsuarioController {
         return ResponseEntity.ok(page);
     }
 
-    @PutMapping("/senha/{id}")
+    @PutMapping("/{id}/senha")
     public ResponseEntity atualizarSenha(@PathVariable Long id,
             @RequestBody @Valid DadosAtualizacaoUsuarioSenha dados, @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoUsuario dadosUsuario = usuarioService.atualizarSenha(id, dados, usuario);
