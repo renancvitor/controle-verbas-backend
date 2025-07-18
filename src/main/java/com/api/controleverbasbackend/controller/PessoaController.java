@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.api.controleverbasbackend.domain.usuario.Usuario;
-import com.api.controleverbasbackend.dto.DadosCadastroPessoaUsuario;
 import com.api.controleverbasbackend.dto.pessoa.DadosAtualizacaoPessoa;
+import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoaUsuario;
 import com.api.controleverbasbackend.dto.pessoa.DadosDetalhamentoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosListagemPessoa;
 import com.api.controleverbasbackend.service.PessoaService;
