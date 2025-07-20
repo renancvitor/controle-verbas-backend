@@ -55,7 +55,8 @@ public class CargoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosatualizacaoCargo dados,
+    public ResponseEntity<DadosDetalhamentoCargo> atualizar(@PathVariable Long id,
+            @RequestBody @Valid DadosatualizacaoCargo dados,
             @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoCargo dadosCargo = cargoService.atualizar(id, dados, usuario);
         return ResponseEntity.ok(dadosCargo);
