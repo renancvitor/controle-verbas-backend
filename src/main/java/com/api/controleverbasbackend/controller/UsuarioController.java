@@ -40,14 +40,14 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}/senha")
-    public ResponseEntity atualizarSenha(@PathVariable Long id,
+    public ResponseEntity<DadosDetalhamentoUsuario> atualizarSenha(@PathVariable Long id,
             @RequestBody @Valid DadosAtualizacaoUsuarioSenha dados, @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoUsuario dadosUsuario = usuarioService.atualizarSenha(id, dados, usuario);
         return ResponseEntity.ok(dadosUsuario);
     }
 
     @PutMapping("/tipo/{id}")
-    public ResponseEntity atualizarUsuarioTipo(@PathVariable Long id,
+    public ResponseEntity<DadosDetalhamentoUsuario> atualizarUsuarioTipo(@PathVariable Long id,
             @RequestBody @Valid DadosAtualizacaoUsuarioTipo dados, @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoUsuario dadosUsuario = usuarioService.atualizarUsuarioTipo(id, dados, usuario);
         return ResponseEntity.ok(dadosUsuario);
