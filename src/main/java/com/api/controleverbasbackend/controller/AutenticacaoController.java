@@ -25,7 +25,7 @@ public class AutenticacaoController {
     private AutenticacaoService autenticacaoService;
 
     @PostMapping
-    public ResponseEntity autenticacao(@RequestBody @Valid DadosLogin dados) {
+    public ResponseEntity<DadosTokenJWT> autenticacao(@RequestBody @Valid DadosLogin dados) {
         DadosTokenJWT resposta = autenticacaoService.autenticacao(dados, authenticationManager);
         return ResponseEntity.ok(resposta);
     }
