@@ -16,21 +16,21 @@ import jakarta.persistence.EntityNotFoundException;
 public class TratadorDeErros {
 
     @ExceptionHandler(AutorizacaoException.class)
-    public ResponseEntity tratarErro403(AutorizacaoException ex) {
+    public ResponseEntity<Map<String, String>> tratarErro403(AutorizacaoException ex) {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body(Map.of("message", ex.getMessage()));
     }
 
     @ExceptionHandler(NaoEncontradoException.class)
-    public ResponseEntity tratarErro404RegraNegocio(NaoEncontradoException ex) {
+    public ResponseEntity<Map<String, String>> tratarErro404RegraNegocio(NaoEncontradoException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(Map.of("message", ex.getMessage()));
     }
 
     @ExceptionHandler(ValidacaoException.class)
-    public ResponseEntity tratarErro400RegraNegocio(ValidacaoException ex) {
+    public ResponseEntity<Map<String, String>> tratarErro400RegraNegocio(ValidacaoException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("message", ex.getMessage()));
@@ -44,7 +44,7 @@ public class TratadorDeErros {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity tratarErro400(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, List<DadosErroValidacao>>> tratarErro400(MethodArgumentNotValidException ex) {
         List<FieldError> erros = ex.getFieldErrors();
         return ResponseEntity
                 .badRequest()
