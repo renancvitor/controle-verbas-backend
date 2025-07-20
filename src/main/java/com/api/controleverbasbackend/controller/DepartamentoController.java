@@ -55,7 +55,8 @@ public class DepartamentoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoDepartamento dados,
+    public ResponseEntity<DadosDetalhamentoDepartamento> atualizar(@PathVariable Long id,
+            @RequestBody @Valid DadosAtualizacaoDepartamento dados,
             @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoDepartamento dadosDepartamento = departamentoService.atualizar(id, dados, usuario);
         return ResponseEntity.ok(dadosDepartamento);
