@@ -57,7 +57,8 @@ public class PessoaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoPessoa dados,
+    public ResponseEntity<DadosDetalhamentoPessoa> atualizar(@PathVariable Long id,
+            @RequestBody @Valid DadosAtualizacaoPessoa dados,
             @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoPessoa dadosPessoa = pessoaService.atualizar(id, dados, usuario);
         return ResponseEntity.ok(dadosPessoa);
