@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -58,7 +60,20 @@ public class TratadorDeErros {
         return ResponseEntity
                 .status(500)
                 .body(Map.of("message", "Erro interno do servidor. Tente novamente mais tarde."));
+    }
 
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<?> tratarUsuarioNaoEncontrado(UsernameNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", ex.getMessage()));
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> tratarCredenciaisInvalidas(BadCredentialsException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Credenciais inválidas."));
     }
 
     private record DadosErroValidacao(String campo, String mensagem) {
