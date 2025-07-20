@@ -35,7 +35,7 @@ public class OrcamentoController {
 
     @GetMapping
     public ResponseEntity<Page<DadosListagemOrcamento>> listar(Optional<Integer> statusId,
-            @PageableDefault(size = 20, sort = ("id")) Pageable pageable,
+            @PageableDefault(size = 5000, sort = ("id")) Pageable pageable,
             @AuthenticationPrincipal Usuario usuarioLogado) {
 
         Page<DadosListagemOrcamento> page = orcamentoService.listar(pageable, usuarioLogado, statusId);

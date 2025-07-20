@@ -37,7 +37,8 @@ public class PessoaController {
 
     @GetMapping
     public ResponseEntity<Page<DadosListagemPessoa>> listar(@RequestParam(required = false) Boolean ativo,
-            @PageableDefault(size = 20, sort = ("nome")) Pageable pageable, @AuthenticationPrincipal Usuario usuario) {
+            @PageableDefault(size = 5000, sort = ("nome")) Pageable pageable,
+            @AuthenticationPrincipal Usuario usuario) {
         Page<DadosListagemPessoa> page = pessoaService.listar(pageable, usuario, ativo);
         return ResponseEntity.ok(page);
     }
