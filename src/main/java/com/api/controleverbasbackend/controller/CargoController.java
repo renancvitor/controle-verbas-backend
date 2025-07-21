@@ -23,8 +23,10 @@ import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
-import com.api.controleverbasbackend.dto.cargo.DadosatualizacaoCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
 import com.api.controleverbasbackend.infra.mensageria.Loggable;
+import com.api.controleverbasbackend.infra.mensageria.Loggables;
+import com.api.controleverbasbackend.infra.mensageria.TipoLog;
 import com.api.controleverbasbackend.service.CargoService;
 
 import jakarta.validation.Valid;
@@ -56,9 +58,12 @@ public class CargoController {
     }
 
     @PutMapping("/{id}")
-    @Loggable
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Cargo"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Cargo")
+    })
     public ResponseEntity<DadosDetalhamentoCargo> atualizar(@PathVariable Long id,
-            @RequestBody @Valid DadosatualizacaoCargo dados,
+            @RequestBody @Valid DadosAtualizacaoCargo dados,
             @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoCargo dadosCargo = cargoService.atualizar(id, dados, usuario);
         return ResponseEntity.ok(dadosCargo);

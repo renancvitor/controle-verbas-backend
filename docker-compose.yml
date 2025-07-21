@@ -29,8 +29,8 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - "9092:9092"   # uso interno (docker)
-      - "9094:9094"   # acesso externo (localhost)
+      - "9092:9092"   # porta interna para listeners internos no container
+      - "9094:9094"   # porta externa para acesso fora do container
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181

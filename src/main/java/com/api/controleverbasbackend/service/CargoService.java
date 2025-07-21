@@ -12,7 +12,7 @@ import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
-import com.api.controleverbasbackend.dto.cargo.DadosatualizacaoCargo;
+import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
 import com.api.controleverbasbackend.infra.exception.AutorizacaoException;
 import com.api.controleverbasbackend.infra.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.CargoRepository;
@@ -50,7 +50,7 @@ public class CargoService {
     }
 
     @Transactional
-    public DadosDetalhamentoCargo atualizar(Long id, DadosatualizacaoCargo dados, Usuario usuario) {
+    public DadosDetalhamentoCargo atualizar(Long id, DadosAtualizacaoCargo dados, Usuario usuario) {
         Cargo cargo = cargoRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cargo com ID " + id + " não encontrado."));
 
