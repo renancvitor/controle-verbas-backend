@@ -24,6 +24,7 @@ import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosatualizacaoCargo;
+import com.api.controleverbasbackend.infra.mensageria.Loggable;
 import com.api.controleverbasbackend.service.CargoService;
 
 import jakarta.validation.Valid;
@@ -55,6 +56,7 @@ public class CargoController {
     }
 
     @PutMapping("/{id}")
+    @Loggable
     public ResponseEntity<DadosDetalhamentoCargo> atualizar(@PathVariable Long id,
             @RequestBody @Valid DadosatualizacaoCargo dados,
             @AuthenticationPrincipal Usuario usuario) {
