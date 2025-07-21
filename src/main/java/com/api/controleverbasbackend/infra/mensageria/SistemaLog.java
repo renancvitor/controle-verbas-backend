@@ -2,6 +2,7 @@ package com.api.controleverbasbackend.infra.mensageria;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,13 +26,19 @@ public class SistemaLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String tipo;
+    private String tipo; // INSERT, PRE_UPDATE, POST_UPDATE, DELETE
+
+    private String entidade; // Ex: "Usuario", "Pessoa", etc.
 
     private String usuario;
 
     private LocalDateTime dataHora;
 
-    private String mensagem;
+    @Column(columnDefinition = "TEXT")
+    private String payload; // Estado do objeto em JSON (antes ou depois)
+
+    @Column(columnDefinition = "TEXT")
+    private String mensagem; // Ex: "Usuário atualizado com sucesso"
 
     @PrePersist
     public void prePersist() {
