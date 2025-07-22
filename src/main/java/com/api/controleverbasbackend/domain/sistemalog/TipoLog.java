@@ -4,5 +4,7 @@ public enum TipoLog {
     INSERT,
     PRE_UPDATE,
     POST_UPDATE,
-    DELETE
+    DELETE,
+    LOGIN,
+    LOGOUT
 }
