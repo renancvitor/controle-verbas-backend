@@ -1,5 +1,8 @@
-package com.api.controleverbasbackend.infra.mensageria;
+package com.api.controleverbasbackend.infra.mensageria.log;
 
+import com.api.controleverbasbackend.domain.sistemalog.SistemaLog;
+import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
+import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

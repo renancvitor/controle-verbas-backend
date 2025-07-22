@@ -1,4 +1,4 @@
-package com.api.controleverbasbackend.infra.mensageria;
+package com.api.controleverbasbackend.domain.sistemalog;
 
 public enum TipoLog {
     INSERT,

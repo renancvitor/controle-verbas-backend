@@ -1,4 +1,4 @@
-package com.api.controleverbasbackend.infra.mensageria;
+package com.api.controleverbasbackend.kafka;
 
 import java.time.LocalDateTime;
 
@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.api.controleverbasbackend.domain.sistemalog.SistemaLog;
+import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 
 @RestController
 public class KafkaTestController {

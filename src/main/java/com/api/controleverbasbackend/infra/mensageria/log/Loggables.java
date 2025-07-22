@@ -1,4 +1,4 @@
-package com.api.controleverbasbackend.infra.mensageria;
+package com.api.controleverbasbackend.infra.mensageria.log;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

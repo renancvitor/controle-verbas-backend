@@ -1,8 +1,10 @@
-package com.api.controleverbasbackend.infra.mensageria;
+package com.api.controleverbasbackend.infra.mensageria.kafka;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import com.api.controleverbasbackend.domain.sistemalog.SistemaLog;
+import com.api.controleverbasbackend.repository.SistemaLogRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

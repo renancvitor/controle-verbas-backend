@@ -1,6 +1,8 @@
-package com.api.controleverbasbackend.infra.mensageria;
+package com.api.controleverbasbackend.infra.mensageria.log;
 
 import java.lang.annotation.*;
+
+import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
 
 @Repeatable(Loggables.class)
 @Target(ElementType.METHOD)

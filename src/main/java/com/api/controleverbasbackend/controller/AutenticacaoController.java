@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.controleverbasbackend.dto.autenticacao.DadosLogin;
 import com.api.controleverbasbackend.dto.autenticacao.DadosTokenJWT;
-import com.api.controleverbasbackend.infra.mensageria.Loggable;
+import com.api.controleverbasbackend.infra.mensageria.log.Loggable;
 import com.api.controleverbasbackend.service.AutenticacaoService;
 
 import jakarta.validation.Valid;
