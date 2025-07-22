@@ -2,6 +2,8 @@ package com.api.controleverbasbackend.infra.mensageria.log;
 
 import com.api.controleverbasbackend.domain.sistemalog.SistemaLog;
 import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
+import com.api.controleverbasbackend.dto.autenticacao.DadosTokenJWT;
+import com.api.controleverbasbackend.dto.usuario.DadosResumidoUsuario;
 import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,12 +15,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 
 @Aspect
@@ -29,7 +33,8 @@ public class LogAspect {
     private final ObjectMapper objectMapper;
     private final ApplicationContext applicationContext;
 
-    public LogAspect(LogProducer logProducer, ApplicationContext applicationContext) {
+    public LogAspect(LogProducer logProducer,
+            ApplicationContext applicationContext) {
         this.logProducer = logProducer;
         this.applicationContext = applicationContext;
         this.objectMapper = new ObjectMapper();
@@ -37,7 +42,7 @@ public class LogAspect {
         this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    @Around("@annotation(com.api.controleverbasbackend.infra.mensageria.Loggable) || @annotation(com.api.controleverbasbackend.infra.mensageria.Loggables)")
+    @Around("@annotation(com.api.controleverbasbackend.infra.mensageria.log.Loggable) || @annotation(com.api.controleverbasbackend.infra.mensageria.log.Loggables)")
     public Object gerarLogsMultiples(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
@@ -93,6 +98,29 @@ public class LogAspect {
                     "Estado APÓS a alteração em " + entidadeNome));
         }
 
+        if (tipo == TipoLog.LOGIN) {
+            String usuarioEmail = "sistema"; // fallback
+
+            // Verifica se o estadoNovo é ResponseEntity (caso o método login retorne isso)
+            if (estadoNovo instanceof ResponseEntity<?> responseEntity) {
+                Object body = responseEntity.getBody();
+                if (body instanceof DadosTokenJWT dadosToken) {
+                    DadosResumidoUsuario usuarioDTO = dadosToken.usuario();
+                    if (usuarioDTO != null) {
+                        usuarioEmail = usuarioDTO.email();
+                    }
+                }
+            }
+
+            Map<String, Object> payloadAuth = Map.of("usuario", usuarioEmail);
+
+            System.out.println("Usuário para log: " + usuarioEmail);
+            System.out.println("Payload para log: " + payloadAuth);
+
+            logProducer.enviarLog(criarLog(usuarioEmail, tipo, entidadeNome, payloadAuth,
+                    tipo.name() + " realizado com sucesso na entidade " + entidadeNome));
+        }
+
         return estadoNovo;
     }
 
@@ -122,7 +150,7 @@ public class LogAspect {
 
     private SistemaLog criarLog(String usuario, TipoLog tipo, String entidade, Object objeto, String mensagem) {
         try {
-            String payloadJson = objectMapper.writeValueAsString(objeto);
+            String payloadJson = (objeto != null) ? objectMapper.writeValueAsString(objeto) : null;
             SistemaLog log = new SistemaLog();
             log.setTipo(tipo.name());
             log.setEntidade(entidade);
