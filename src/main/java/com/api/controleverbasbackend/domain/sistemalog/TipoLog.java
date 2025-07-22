@@ -5,6 +5,5 @@ public enum TipoLog {
     PRE_UPDATE,
     POST_UPDATE,
     DELETE,
-    LOGIN,
-    LOGOUT
+    LOGIN
 }
