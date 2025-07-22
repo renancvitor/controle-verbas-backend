@@ -22,6 +22,11 @@ services:
       - "2181:2181"
     networks:
       - kafka-net
+    healthcheck:
+      test: ["CMD", "echo", "ruok", "|", "nc", "localhost", "2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   kafka:
     image: confluentinc/cp-kafka:7.3.2
