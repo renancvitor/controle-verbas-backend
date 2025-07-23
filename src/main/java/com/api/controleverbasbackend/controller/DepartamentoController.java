@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosListagemDepartamento;
+import com.api.controleverbasbackend.infra.mensageria.log.Loggable;
+import com.api.controleverbasbackend.infra.mensageria.log.Loggables;
 import com.api.controleverbasbackend.service.DepartamentoService;
 
 import jakarta.validation.Valid;
@@ -44,6 +47,10 @@ public class DepartamentoController {
     }
 
     @PostMapping
+    @Loggables({
+            @Loggable(tipo = TipoLog.INSERT, entidade = "Departamento"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
+    })
     public ResponseEntity<DadosDetalhamentoDepartamento> cadastrar(@RequestBody @Valid DadosCadastroDepartamento dados,
             UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoDepartamento departamento = departamentoService.cadastrar(dados, usuario);
@@ -55,6 +62,10 @@ public class DepartamentoController {
     }
 
     @PutMapping("/{id}")
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
+    })
     public ResponseEntity<DadosDetalhamentoDepartamento> atualizar(@PathVariable Long id,
             @RequestBody @Valid DadosAtualizacaoDepartamento dados,
             @AuthenticationPrincipal Usuario usuario) {
@@ -63,12 +74,20 @@ public class DepartamentoController {
     }
 
     @DeleteMapping("/{id}")
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
+    })
     public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         departamentoService.deletar(id, usuario);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/ativar")
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
+    })
     public ResponseEntity<Void> ativar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         departamentoService.ativar(id, usuario);
         return ResponseEntity.noContent().build();
