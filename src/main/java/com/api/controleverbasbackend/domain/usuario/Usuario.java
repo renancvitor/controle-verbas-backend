@@ -52,11 +52,15 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private Boolean ativo = true;
 
+    @Column(nullable = false, name = "primeiro_acesso")
+    private Boolean primeiroAcesso = true;
+
     public Usuario(String senha, Pessoa pessoa, TipoUsuarioEntidade tipoUsuario) {
         this.senha = senha;
         this.pessoa = pessoa;
         this.tipoUsuario = tipoUsuario;
         this.ativo = true;
+        this.primeiroAcesso = true;
     }
 
     @Override
