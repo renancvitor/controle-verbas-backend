@@ -48,6 +48,10 @@ public class CargoController {
     }
 
     @PostMapping
+    @Loggables({
+            @Loggable(tipo = TipoLog.INSERT, entidade = "Cargo"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Cargo")
+    })
     public ResponseEntity<DadosDetalhamentoCargo> cadastrar(@RequestBody @Valid DadosCadastroCargo dados,
             UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
 
@@ -70,12 +74,20 @@ public class CargoController {
     }
 
     @DeleteMapping("/{id}")
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Cargo"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Cargo")
+    })
     public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         cargoService.deletar(id, usuario);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/ativar")
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Cargo"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Cargo")
+    })
     public ResponseEntity<Void> ativar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         cargoService.ativar(id, usuario);
         return ResponseEntity.noContent().build();
