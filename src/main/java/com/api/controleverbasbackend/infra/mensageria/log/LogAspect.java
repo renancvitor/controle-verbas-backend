@@ -82,9 +82,13 @@ public class LogAspect {
 
         Object estadoAntigo = null;
 
-        if (tipo == TipoLog.PRE_UPDATE || tipo == TipoLog.DELETE) {
+        // Pega estado antigo SOMENTE se for PRE_UPDATE
+        if (tipo == TipoLog.PRE_UPDATE) {
             Object id = extrairIdDoMetodo(joinPoint.getArgs());
-            estadoAntigo = buscarEntidadePorId(entidadeNome, id);
+            if (id != null) {
+                estadoAntigo = buscarEntidadePorId(entidadeNome, id);
+            }
+
             if (estadoAntigo != null) {
                 logProducer.enviarLog(criarLog(usuario, TipoLog.PRE_UPDATE, entidadeNome, estadoAntigo,
                         "Estado ANTES da alteração em " + entidadeNome));
@@ -93,15 +97,15 @@ public class LogAspect {
 
         Object estadoNovo = joinPoint.proceed();
 
-        if (tipo == TipoLog.INSERT || tipo == TipoLog.POST_UPDATE) {
+        if (tipo == TipoLog.INSERT) {
+            logProducer.enviarLog(criarLog(usuario, tipo, entidadeNome, estadoNovo,
+                    "Estado APÓS a criação da entidade " + entidadeNome));
+        } else if (tipo == TipoLog.POST_UPDATE) {
             logProducer.enviarLog(criarLog(usuario, tipo, entidadeNome, estadoNovo,
                     "Estado APÓS a alteração em " + entidadeNome));
-        }
-
-        if (tipo == TipoLog.LOGIN) {
+        } else if (tipo == TipoLog.LOGIN) {
             String usuarioEmail = "sistema"; // fallback
 
-            // Verifica se o estadoNovo é ResponseEntity (caso o método login retorne isso)
             if (estadoNovo instanceof ResponseEntity<?> responseEntity) {
                 Object body = responseEntity.getBody();
                 if (body instanceof DadosTokenJWT dadosToken) {
@@ -113,10 +117,6 @@ public class LogAspect {
             }
 
             Map<String, Object> payloadAuth = Map.of("usuario", usuarioEmail);
-
-            System.out.println("Usuário para log: " + usuarioEmail);
-            System.out.println("Payload para log: " + payloadAuth);
-
             logProducer.enviarLog(criarLog(usuarioEmail, tipo, entidadeNome, payloadAuth,
                     tipo.name() + " realizado com sucesso na entidade " + entidadeNome));
         }
