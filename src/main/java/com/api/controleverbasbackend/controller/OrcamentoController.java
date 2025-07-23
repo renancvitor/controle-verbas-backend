@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosDetalhamentoOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosListagemOrcamento;
+import com.api.controleverbasbackend.infra.mensageria.log.Loggable;
+import com.api.controleverbasbackend.infra.mensageria.log.Loggables;
 import com.api.controleverbasbackend.service.OrcamentoService;
 
 import jakarta.validation.Valid;
@@ -43,6 +46,10 @@ public class OrcamentoController {
     }
 
     @PostMapping
+    @Loggables({
+            @Loggable(tipo = TipoLog.INSERT, entidade = "Orcamento"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
+    })
     public ResponseEntity<DadosDetalhamentoOrcamento> cadastrar(@RequestBody @Valid DadosCadastroOrcamento dados,
             UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
 
@@ -55,6 +62,10 @@ public class OrcamentoController {
     }
 
     @PutMapping("/{id}/aprovar")
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
+    })
     public ResponseEntity<DadosDetalhamentoOrcamento> aprovar(@PathVariable Long id,
             @AuthenticationPrincipal Usuario usuario) {
 
@@ -63,6 +74,10 @@ public class OrcamentoController {
     }
 
     @PutMapping("/{id}/reprovar")
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
+    })
     public ResponseEntity<DadosDetalhamentoOrcamento> reprovar(@PathVariable Long id,
             @AuthenticationPrincipal Usuario usuario) {
 
@@ -71,6 +86,10 @@ public class OrcamentoController {
     }
 
     @PutMapping("/{id}/liberar_verba")
+    @Loggables({
+            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
+            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
+    })
     public ResponseEntity<DadosDetalhamentoOrcamento> liberarVerba(@PathVariable Long id,
             @AuthenticationPrincipal Usuario usuario) {
         DadosDetalhamentoOrcamento dados = orcamentoService.liberarVerba(id, usuario);
