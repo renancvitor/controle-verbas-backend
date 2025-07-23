@@ -59,6 +59,16 @@ public class UsuarioService {
     }
 
     @Transactional
+    public void atualizarSenhaPrimeiroAcesso(Long id, DadosAtualizacaoUsuarioSenha dados, Usuario usuarioLogado) {
+        Usuario usuario = usuarioRepository.findByIdAndPrimeiroAcessoTrue(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
+
+        atualizarSenha(id, dados, usuarioLogado);
+        usuario.setPrimeiroAcesso(false);
+
+    }
+
+    @Transactional
     public DadosDetalhamentoUsuario atualizarSenha(Long id, DadosAtualizacaoUsuarioSenha dados, Usuario usuarioLogado) {
         Usuario usuario = usuarioRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
