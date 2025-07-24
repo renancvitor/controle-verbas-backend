@@ -79,8 +79,15 @@ public class UsuarioService {
             throw new ValidacaoException("A nova senha e a confirmação não coincidem.");
         }
 
+        if (!senhaForte(dados.novaSenha())) {
+            throw new ValidacaoException("A nova senha não atende aos requisitos de segurança: " +
+                    "Mínimo 8 caracteres, pelo menos 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial.");
+        }
+
         String novaSenhaCriptografada = passwordEncoder.encode(dados.novaSenha());
         usuario.atualizarSenha(novaSenhaCriptografada);
+
+        usuario.setPrimeiroAcesso(false);
 
         return new DadosDetalhamentoUsuario(usuario);
     }
