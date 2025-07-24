@@ -42,6 +42,15 @@ public class UsuarioController {
         return ResponseEntity.ok(page);
     }
 
+    @PutMapping("/{id}/primeiro-acesso")
+    public ResponseEntity<Void> atualizarSenhaPrimeiroAcesso(@PathVariable Long id,
+            @RequestBody @Valid DadosAtualizacaoUsuarioSenha dados,
+            @AuthenticationPrincipal Usuario usuario) {
+
+        usuarioService.atualizarSenhaPrimeiroAcesso(id, dados, usuario);
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("/{id}/senha")
     @Loggables({
             @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Usuario"),
