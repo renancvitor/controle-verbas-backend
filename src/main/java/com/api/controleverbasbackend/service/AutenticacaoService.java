@@ -39,6 +39,8 @@ public class AutenticacaoService implements UserDetailsService {
 
         DadosResumidoUsuario usuarioDTO = new DadosResumidoUsuario(usuario);
 
-        return new DadosTokenJWT(jwt, usuarioDTO);
+        boolean primeiroAcesso = usuario.getPrimeiroAcesso();
+
+        return new DadosTokenJWT(jwt, usuarioDTO, primeiroAcesso);
     }
 }
