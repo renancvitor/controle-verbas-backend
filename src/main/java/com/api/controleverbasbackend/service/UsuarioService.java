@@ -58,14 +58,9 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    @Transactional
-    public void atualizarSenhaPrimeiroAcesso(Long id, DadosAtualizacaoUsuarioSenha dados, Usuario usuarioLogado) {
-        Usuario usuario = usuarioRepository.findByIdAndPrimeiroAcessoTrue(id)
-                .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
-
-        atualizarSenha(id, dados, usuarioLogado);
-        usuario.setPrimeiroAcesso(false);
-
+    public boolean senhaForte(String senha) {
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%#?&])[A-Za-z\\d@$!%#?&]{8,}$";
+        return senha != null && senha.matches(regex);
     }
 
     @Transactional
