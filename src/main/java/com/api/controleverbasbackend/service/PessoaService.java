@@ -56,6 +56,10 @@ public class PessoaService {
         @Transactional
         public DadosDetalhamentoPessoa cadastrar(DadosCadastroPessoa dadosPessoa, DadosCadastroUsuario dadosUsuario,
                         Usuario usuario) {
+                if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+                        throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+                }
+
                 Departamento departamento = departamentoRepository.findByIdAndAtivoTrue(dadosPessoa.idDepartamento())
                                 .orElseThrow(() -> new NaoEncontradoException("Departamento não existe."));
                 Cargo cargo = cargoRepository.findByIdAndAtivoTrue(dadosPessoa.idCargo())

@@ -49,10 +49,6 @@ public class UsuarioService {
 
     @Transactional
     public void cadastrar(Pessoa pessoa, DadosCadastroUsuario dadosCadastroUsuario) {
-        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
-            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
-        }
-
         String senhaCriptografada = passwordEncoder.encode(dadosCadastroUsuario.senha());
 
         TipoUsuarioEntidade tipoUsuario = tipoUsuarioRepository.findById(TipoUsuarioEnum.COMUM.getId())
