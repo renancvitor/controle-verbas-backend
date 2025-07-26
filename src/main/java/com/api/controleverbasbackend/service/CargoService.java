@@ -27,7 +27,8 @@ public class CargoService {
 
     @Transactional
     public Page<DadosListagemCargo> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
-        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId()) &&
+                !usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
             throw new AutorizacaoException("Apenas o admin pode listar cargos cadastrados.");
         }
 
@@ -40,6 +41,10 @@ public class CargoService {
 
     @Transactional
     public DadosDetalhamentoCargo cadastrar(DadosCadastroCargo dados, Usuario usuario) {
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode cadastrar novos cargos.");
         }
@@ -53,6 +58,10 @@ public class CargoService {
     public DadosDetalhamentoCargo atualizar(Long id, DadosAtualizacaoCargo dados, Usuario usuario) {
         Cargo cargo = cargoRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cargo com ID " + id + " não encontrado."));
+
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode atualizar cargos.");
@@ -70,6 +79,10 @@ public class CargoService {
         Cargo cargo = cargoRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cargo não encontrado."));
 
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode deletar um cargo.");
         }
@@ -81,6 +94,10 @@ public class CargoService {
     public void ativar(Long id, Usuario usuario) {
         Cargo cargo = cargoRepository.findByIdAndAtivoFalse(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cargo não encontrado."));
+
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode ativar um cargo.");
