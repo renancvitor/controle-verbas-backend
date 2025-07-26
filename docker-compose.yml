@@ -32,7 +32,8 @@ services:
     image: confluentinc/cp-kafka:7.3.2
     container_name: kafka
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     ports:
       - "9092:9092"   # porta interna para listeners internos no container
       - "9094:9094"   # porta externa para acesso fora do container

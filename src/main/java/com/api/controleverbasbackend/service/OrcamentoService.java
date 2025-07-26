@@ -43,7 +43,8 @@ public class OrcamentoService {
         Integer REPROVADO = StatusOrcamentoEnum.REPROVADO.getId();
 
         if (idTipoUsuario.equals(TipoUsuarioEnum.ADMIN.getId())
-                || idTipoUsuario.equals(TipoUsuarioEnum.GESTOR.getId())) {
+                || idTipoUsuario.equals(TipoUsuarioEnum.GESTOR.getId()) &&
+                        idTipoUsuario.equals(TipoUsuarioEnum.TESTER.getId())) {
             if (statusId.isPresent()) {
                 return orcamentoRepository.findByStatusOrcamentoEntidadeId(statusId.get(), pageable)
                         .map(DadosListagemOrcamento::new);
@@ -95,6 +96,10 @@ public class OrcamentoService {
 
     @Transactional
     public DadosDetalhamentoOrcamento aprovar(Long id, Usuario usuario) {
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.GESTOR.getId())) {
             throw new AutorizacaoException("Apenas o gestor pode aprovar orçamentos.");
         }
@@ -113,6 +118,10 @@ public class OrcamentoService {
 
     @Transactional
     public DadosDetalhamentoOrcamento reprovar(Long id, Usuario usuario) {
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.GESTOR.getId())) {
             throw new AutorizacaoException("Apenas o gestor pode reprovar orçamentos.");
         }
@@ -133,6 +142,10 @@ public class OrcamentoService {
     public DadosDetalhamentoOrcamento liberarVerba(Long id, Usuario usuario) {
         Orcamento orcamento = orcamentoRepository.findByIdAndVerbaLiberadaFalse(id)
                 .orElseThrow(() -> new EntityNotFoundException("Orçamento não encontrado."));
+
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.GESTOR.getId())
                 && !usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESOUREIRO.getId())) {

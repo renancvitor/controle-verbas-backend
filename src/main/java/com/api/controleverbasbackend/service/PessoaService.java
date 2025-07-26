@@ -42,7 +42,8 @@ public class PessoaService {
 
         @Transactional
         public Page<DadosListagemPessoa> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
-                if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+                if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId()) &&
+                                !usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
                         throw new AutorizacaoException("Apenas o admin pode listar pessoas cadastradas.");
                 }
 
@@ -83,6 +84,10 @@ public class PessoaService {
                                 .orElseThrow(() -> new EntityNotFoundException(
                                                 "Pessoa com ID " + id + " náo encontrado."));
 
+                if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+                        throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+                }
+
                 if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
                         throw new AutorizacaoException("Apenas o admin pode atualizar pessoas.");
                 }
@@ -99,6 +104,10 @@ public class PessoaService {
                 Pessoa pessoa = pessoaRepository.findByIdAndAtivoTrue(id)
                                 .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada."));
 
+                if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+                        throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+                }
+
                 if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
                         throw new AutorizacaoException("Apenas o admin pode deletar uma pessoa.");
                 }
@@ -110,6 +119,10 @@ public class PessoaService {
         public void ativar(Long id, Usuario usuario) {
                 Pessoa pessoa = pessoaRepository.findByIdAndAtivoFalse(id)
                                 .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada."));
+
+                if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+                        throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+                }
 
                 if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
                         throw new AutorizacaoException("Apenas o admin pode ativar uma pessoa.");
