@@ -27,7 +27,8 @@ public class DepartamentoService {
 
     @Transactional
     public Page<DadosListagemDepartamento> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
-        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId()) &&
+                !usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
             throw new AutorizacaoException("Apenas o admin pode listar derpatamentos cadastrados.");
         }
 
@@ -39,6 +40,10 @@ public class DepartamentoService {
 
     @Transactional
     public DadosDetalhamentoDepartamento cadastrar(DadosCadastroDepartamento dados, Usuario usuario) {
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode cadastrar novos cargos.");
         }
@@ -52,6 +57,10 @@ public class DepartamentoService {
     public DadosDetalhamentoDepartamento atualizar(Long id, DadosAtualizacaoDepartamento dados, Usuario usuario) {
         Departamento departamento = departamentoRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Departamento com ID " + id + " não encontrado."));
+
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode atualizar departamentos.");
@@ -69,6 +78,10 @@ public class DepartamentoService {
         Departamento departamento = departamentoRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Departamento não encontrado."));
 
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode deletar um departamento.");
         }
@@ -80,6 +93,10 @@ public class DepartamentoService {
     public void ativar(Long id, Usuario usuario) {
         Departamento departamento = departamentoRepository.findByIdAndAtivoFalse(id)
                 .orElseThrow(() -> new EntityNotFoundException("Departamento não encontrado."));
+
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
 
         if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode ativar um departamento.");
