@@ -5,7 +5,8 @@ public enum TipoUsuarioEnum {
     ADMIN(1),
     GESTOR(2),
     TESOUREIRO(3),
-    COMUM(4);
+    COMUM(4),
+    TESTER(5);
 
     private final int id;
 
