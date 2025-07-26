@@ -36,7 +36,8 @@ public class UsuarioService {
     private TipoUsuarioRepository tipoUsuarioRepository;
 
     public Page<DadosListagemUsuario> listar(Pageable pageable, Usuario usuario, Boolean ativo) {
-        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
+        if (!usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId()) &&
+                !usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
             throw new AutorizacaoException("Apenas o admin pode listar usuários cadastrados.");
         }
 
@@ -48,6 +49,10 @@ public class UsuarioService {
 
     @Transactional
     public void cadastrar(Pessoa pessoa, DadosCadastroUsuario dadosCadastroUsuario) {
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         String senhaCriptografada = passwordEncoder.encode(dadosCadastroUsuario.senha());
 
         TipoUsuarioEntidade tipoUsuario = tipoUsuarioRepository.findById(TipoUsuarioEnum.COMUM.getId())
@@ -67,6 +72,10 @@ public class UsuarioService {
     public DadosDetalhamentoUsuario atualizarSenha(Long id, DadosAtualizacaoUsuarioSenha dados, Usuario usuarioLogado) {
         Usuario usuario = usuarioRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
+
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
 
         if (!usuarioLogado.getId().equals(id)) {
             throw new RuntimeException("Você só pode alterar sua própria senha.");
@@ -98,6 +107,10 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario com ID " + id + " náo encontrado."));
 
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode atualizar pessoas.");
         }
@@ -114,6 +127,10 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
 
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode deletar um usuário.");
         }
@@ -125,6 +142,10 @@ public class UsuarioService {
     public void ativar(Long id, Usuario usuarioLogado) {
         Usuario usuario = usuarioRepository.findByIdAndAtivoFalse(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
+
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
 
         if (!usuarioLogado.getTipoUsuario().getId().equals(TipoUsuarioEnum.ADMIN.getId())) {
             throw new AutorizacaoException("Apenas o admin pode ativar um usuário.");

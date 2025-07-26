@@ -42,9 +42,9 @@ public class OrcamentoService {
         Integer APROVADO = StatusOrcamentoEnum.APROVADO.getId();
         Integer REPROVADO = StatusOrcamentoEnum.REPROVADO.getId();
 
-        if (idTipoUsuario.equals(TipoUsuarioEnum.ADMIN.getId())
-                || idTipoUsuario.equals(TipoUsuarioEnum.GESTOR.getId()) &&
-                        idTipoUsuario.equals(TipoUsuarioEnum.TESTER.getId())) {
+        if (idTipoUsuario.equals(TipoUsuarioEnum.ADMIN.getId()) ||
+                idTipoUsuario.equals(TipoUsuarioEnum.GESTOR.getId()) ||
+                idTipoUsuario.equals(TipoUsuarioEnum.TESTER.getId())) {
             if (statusId.isPresent()) {
                 return orcamentoRepository.findByStatusOrcamentoEntidadeId(statusId.get(), pageable)
                         .map(DadosListagemOrcamento::new);
@@ -80,6 +80,10 @@ public class OrcamentoService {
 
     @Transactional
     public DadosDetalhamentoOrcamento cadastrar(DadosCadastroOrcamento dados, Usuario usuario) {
+        if (usuario.getTipoUsuario().getId().equals(TipoUsuarioEnum.TESTER.getId())) {
+            throw new AutorizacaoException("Usuário TESTER não pode alterar dados.");
+        }
+
         Orcamento orcamento = new Orcamento(dados);
 
         orcamento.setSolicitante(usuario);
