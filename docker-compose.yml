@@ -34,6 +34,7 @@ services:
     depends_on:
       zookeeper:
         condition: service_healthy
+    entrypoint: ["/bin/sh", "-c", "while ! nc -z zookeeper 2181; do sleep 2; done; /etc/confluent/docker/run"]
     ports:
       - "9092:9092"   # porta interna para listeners internos no container
       - "9094:9094"   # porta externa para acesso fora do container
@@ -47,6 +48,11 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - kafka-net
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   kafka-cli:
     image: confluentinc/cp-kafka:7.3.2
