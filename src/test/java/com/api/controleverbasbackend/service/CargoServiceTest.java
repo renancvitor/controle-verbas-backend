@@ -1,5 +1,6 @@
 package com.api.controleverbasbackend.service;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -65,7 +66,24 @@ public class CargoServiceTest {
 
     @Test
     void testDeletar() {
+        Long cargoId = 1L;
 
+        Cargo cargo = new Cargo();
+        cargo.setId(cargoId);
+        cargo.setAtivo(true);
+
+        when(cargoRepository.findByIdAndAtivoTrue(cargoId))
+                .thenReturn(Optional.of(cargo));
+
+        TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
+        tipoUsuarioEntidade.setId(TipoUsuarioEnum.ADMIN.getId());
+
+        Usuario usuario = new Usuario();
+        usuario.setTipoUsuario(tipoUsuarioEntidade);
+
+        cargoService.deletar(cargoId, usuario);
+
+        assertFalse(cargo.getAtivo());
     }
 
     @Test
