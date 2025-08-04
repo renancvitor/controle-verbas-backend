@@ -137,5 +137,27 @@ public class CargoServiceTest {
 
     @Test
     void testListar() {
+        TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
+        tipoUsuarioEntidade.setId(TipoUsuarioEnum.ADMIN.getId());
+
+        Usuario usuario = new Usuario();
+        usuario.setTipoUsuario(tipoUsuarioEntidade);
+
+        Cargo cargo1 = new Cargo();
+        cargo1.setNome("Analista");
+
+        Cargo cargo2 = new Cargo();
+        cargo2.setNome("Desenvolvedor");
+
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Cargo> cargosAtivos = List.of(cargo1, cargo2);
+
+        when(cargoRepository.findAllByAtivo(true, pageable))
+                .thenReturn(new PageImpl<>(cargosAtivos));
+
+        Page<DadosListagemCargo> resultado = cargoService.listar(pageable, usuario, true);
+
+        assertEquals(2, resultado.getTotalElements());
+        assertEquals("Analista", resultado.getContent().get(0).nome());
     }
 }
