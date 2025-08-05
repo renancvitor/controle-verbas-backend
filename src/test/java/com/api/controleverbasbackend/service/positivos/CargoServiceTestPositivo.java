@@ -33,6 +33,7 @@ import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
 import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 import com.api.controleverbasbackend.repository.CargoRepository;
 import com.api.controleverbasbackend.service.CargoService;
+import com.api.controleverbasbackend.utils.MockUtils;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -49,22 +50,15 @@ public class CargoServiceTestPositivo {
 
     @Test
     void testAtivar() {
-        Long cargoId = 1L;
-
-        Cargo cargo = new Cargo();
-        cargo.setId(cargoId);
+        Cargo cargo = MockUtils.idPadrao(new Cargo());
         cargo.setAtivo(false);
 
-        when(cargoRepository.findByIdAndAtivoFalse(cargoId))
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
+
+        when(cargoRepository.findByIdAndAtivoFalse(cargo.getId()))
                 .thenReturn(Optional.of(cargo));
 
-        TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
-        tipoUsuarioEntidade.setId(TipoUsuarioEnum.ADMIN.getId());
-
-        Usuario usuario = new Usuario();
-        usuario.setTipoUsuario(tipoUsuarioEntidade);
-
-        cargoService.ativar(cargoId, usuario);
+        cargoService.ativar(cargo.getId(), usuario);
 
         assertTrue(cargo.getAtivo());
     }

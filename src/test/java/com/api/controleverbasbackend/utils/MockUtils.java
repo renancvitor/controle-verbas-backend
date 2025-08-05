@@ -19,7 +19,7 @@ public class MockUtils {
         return usuario;
     }
 
-    public static <T> T IdPadrao(T entidade) {
+    public static <T> T idPadrao(T entidade) {
         try {
             entidade.getClass()
                     .getMethod("setId", Long.class)
