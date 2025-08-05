@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.api.controleverbasbackend.domain.cargo.Cargo;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
@@ -27,6 +26,7 @@ import com.api.controleverbasbackend.infra.exception.ValidacaoException;
 import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 import com.api.controleverbasbackend.repository.CargoRepository;
 import com.api.controleverbasbackend.service.CargoService;
+import com.api.controleverbasbackend.utils.MockUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -52,7 +52,7 @@ public class CargoServiceTestNegativo {
     void testAtivarComCargoInexistente() {
         when(cargoRepository.findByIdAndAtivoFalse(1L)).thenReturn(Optional.empty());
 
-        Usuario usuario = criarUsuario(TipoUsuarioEnum.ADMIN);
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
 
         assertThrows(EntityNotFoundException.class, () -> cargoService.ativar(1L, usuario));
     }
@@ -65,7 +65,7 @@ public class CargoServiceTestNegativo {
 
         when(cargoRepository.findByIdAndAtivoFalse(1L)).thenReturn(Optional.of(cargo));
 
-        Usuario usuario = criarUsuario(TipoUsuarioEnum.TESTER);
+        Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.TESTER);
 
         assertThrows(AutorizacaoException.class, () -> cargoService.ativar(1L, usuario));
     }
@@ -77,7 +77,7 @@ public class CargoServiceTestNegativo {
         void testAtualizarCargoInexistente() {
             when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.empty());
 
-            Usuario usuario = criarUsuario(TipoUsuarioEnum.ADMIN);
+            Usuario usuario = MockUtils.criarUsuarioAdmin();
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
 
             assertThrows(EntityNotFoundException.class, () -> cargoService.atualizar(1L, dados, usuario));
@@ -92,7 +92,7 @@ public class CargoServiceTestNegativo {
 
             when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.of(cargo));
 
-            Usuario usuario = criarUsuario(TipoUsuarioEnum.GESTOR);
+            Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.GESTOR);
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
 
             assertThrows(AutorizacaoException.class, () -> cargoService.atualizar(1L, dados, usuario));
@@ -107,7 +107,7 @@ public class CargoServiceTestNegativo {
 
             when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.of(cargo));
 
-            Usuario usuario = criarUsuario(TipoUsuarioEnum.ADMIN);
+            Usuario usuario = MockUtils.criarUsuarioAdmin();
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
 
             assertThrows(ValidacaoException.class, () -> cargoService.atualizar(1L, dados, usuario));
@@ -119,7 +119,7 @@ public class CargoServiceTestNegativo {
 
         @Test
         void testCadastrarComUsuarioTester() {
-            Usuario usuario = criarUsuario(TipoUsuarioEnum.TESTER);
+            Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.TESTER);
             DadosCadastroCargo dados = new DadosCadastroCargo("Novo Cargo");
 
             assertThrows(AutorizacaoException.class, () -> cargoService.cadastrar(dados, usuario));
@@ -127,7 +127,7 @@ public class CargoServiceTestNegativo {
 
         @Test
         void testCadastrarComUsuarioNaoAdmin() {
-            Usuario usuario = criarUsuario(TipoUsuarioEnum.GESTOR);
+            Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.GESTOR);
             DadosCadastroCargo dados = new DadosCadastroCargo("Novo Cargo");
 
             assertThrows(AutorizacaoException.class, () -> cargoService.cadastrar(dados, usuario));
@@ -141,7 +141,7 @@ public class CargoServiceTestNegativo {
         void testDeletarCargoInexistente() {
             when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.empty());
 
-            Usuario usuario = criarUsuario(TipoUsuarioEnum.ADMIN);
+            Usuario usuario = MockUtils.criarUsuarioAdmin();
 
             assertThrows(EntityNotFoundException.class, () -> cargoService.deletar(1L, usuario));
         }
@@ -154,7 +154,7 @@ public class CargoServiceTestNegativo {
 
             when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.of(cargo));
 
-            Usuario usuario = criarUsuario(TipoUsuarioEnum.TESTER);
+            Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.TESTER);
 
             assertThrows(AutorizacaoException.class, () -> cargoService.deletar(1L, usuario));
         }
@@ -162,18 +162,9 @@ public class CargoServiceTestNegativo {
 
     @Test
     void testListarComUsuarioNaoAutorizado() {
-        Usuario usuario = criarUsuario(TipoUsuarioEnum.GESTOR);
+        Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.GESTOR);
         Pageable pageable = PageRequest.of(0, 10);
 
         assertThrows(AutorizacaoException.class, () -> cargoService.listar(pageable, usuario, true));
-    }
-
-    private Usuario criarUsuario(TipoUsuarioEnum tipo) {
-        TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
-        tipoUsuarioEntidade.setId(tipo.getId());
-
-        Usuario usuario = new Usuario();
-        usuario.setTipoUsuario(tipoUsuarioEntidade);
-        return usuario;
     }
 }
