@@ -18,4 +18,16 @@ public class MockUtils {
         usuario.setTipoUsuario(tipoUsuario);
         return usuario;
     }
+
+    public static <T> T IdPadrao(T entidade) {
+        try {
+            entidade.getClass()
+                    .getMethod("setId", Long.class)
+                    .invoke(entidade, 1L);
+            return entidade;
+        } catch (Exception e) {
+            throw new RuntimeException("A entidade " + entidade.getClass().getSimpleName() + " não possui setId(Long)",
+                    e);
+        }
+    }
 }
