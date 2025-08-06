@@ -65,16 +65,15 @@ public class CargoServiceTestPositivo {
 
     @Test
     void testAtualizar() {
-        Long cargoId = 1L;
         String nomeAtual = "Cargo Antigo";
         String novoNome = "Administrador";
 
-        Cargo cargo = new Cargo();
-        cargo.setId(cargoId);
+        Cargo cargo = MockUtils.idPadrao(new Cargo());
+        cargo.setAtivo(false);
         cargo.setNome(nomeAtual);
         cargo.setAtivo(true);
 
-        when(cargoRepository.findByIdAndAtivoTrue(cargoId))
+        when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
                 .thenReturn(Optional.of(cargo));
 
         TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
@@ -85,7 +84,7 @@ public class CargoServiceTestPositivo {
 
         DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo(novoNome);
 
-        DadosDetalhamentoCargo resultado = cargoService.atualizar(cargoId, dados, usuario);
+        DadosDetalhamentoCargo resultado = cargoService.atualizar(cargo.getId(), dados, usuario);
 
         assertEquals(novoNome, resultado.nome());
     }
@@ -110,13 +109,10 @@ public class CargoServiceTestPositivo {
 
     @Test
     void testDeletar() {
-        Long cargoId = 1L;
-
-        Cargo cargo = new Cargo();
-        cargo.setId(cargoId);
+        Cargo cargo = MockUtils.idPadrao(new Cargo());
         cargo.setAtivo(true);
 
-        when(cargoRepository.findByIdAndAtivoTrue(cargoId))
+        when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
                 .thenReturn(Optional.of(cargo));
 
         TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
@@ -125,7 +121,7 @@ public class CargoServiceTestPositivo {
         Usuario usuario = new Usuario();
         usuario.setTipoUsuario(tipoUsuarioEntidade);
 
-        cargoService.deletar(cargoId, usuario);
+        cargoService.deletar(cargo.getId(), usuario);
 
         assertFalse(cargo.getAtivo());
     }

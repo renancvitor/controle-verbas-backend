@@ -18,6 +18,7 @@ import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 import com.api.controleverbasbackend.repository.DepartamentoRepository;
 import com.api.controleverbasbackend.service.DepartamentoService;
+import com.api.controleverbasbackend.utils.MockUtils;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -34,13 +35,10 @@ public class DepartamentoServiceTestPositivo {
 
     @Test
     void testAtivar() {
-        Long departamentoId = 1L;
-
-        Departamento departamento = new Departamento();
-        departamento.setId(departamentoId);
+        Departamento departamento = MockUtils.idPadrao(new Departamento());
         departamento.setAtivo(false);
 
-        when(departamentoRepository.findByIdAndAtivoFalse(departamentoId))
+        when(departamentoRepository.findByIdAndAtivoFalse(departamento.getId()))
                 .thenReturn(Optional.of(departamento));
 
         TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
@@ -49,7 +47,7 @@ public class DepartamentoServiceTestPositivo {
         Usuario usuario = new Usuario();
         usuario.setTipoUsuario(tipoUsuarioEntidade);
 
-        departamentoService.ativar(departamentoId, usuario);
+        departamentoService.ativar(departamento.getId(), usuario);
 
         assertTrue(departamento.getAtivo());
     }

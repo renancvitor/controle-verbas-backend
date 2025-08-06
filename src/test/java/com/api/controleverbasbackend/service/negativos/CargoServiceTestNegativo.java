@@ -50,24 +50,24 @@ public class CargoServiceTestNegativo {
 
     @Test
     void testAtivarComCargoInexistente() {
-        when(cargoRepository.findByIdAndAtivoFalse(1L)).thenReturn(Optional.empty());
+        Cargo cargo = MockUtils.idPadrao(new Cargo());
+        when(cargoRepository.findByIdAndAtivoFalse(cargo.getId())).thenReturn(Optional.empty());
 
         Usuario usuario = MockUtils.criarUsuarioAdmin();
 
-        assertThrows(EntityNotFoundException.class, () -> cargoService.ativar(1L, usuario));
+        assertThrows(EntityNotFoundException.class, () -> cargoService.ativar(cargo.getId(), usuario));
     }
 
     @Test
     void testAtivarComUsuarioTester() {
-        Cargo cargo = new Cargo();
-        cargo.setId(1L);
+        Cargo cargo = MockUtils.idPadrao(new Cargo());
         cargo.setAtivo(false);
 
-        when(cargoRepository.findByIdAndAtivoFalse(1L)).thenReturn(Optional.of(cargo));
+        when(cargoRepository.findByIdAndAtivoFalse(cargo.getId())).thenReturn(Optional.of(cargo));
 
         Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.TESTER);
 
-        assertThrows(AutorizacaoException.class, () -> cargoService.ativar(1L, usuario));
+        assertThrows(AutorizacaoException.class, () -> cargoService.ativar(cargo.getId(), usuario));
     }
 
     @Nested
@@ -75,42 +75,41 @@ public class CargoServiceTestNegativo {
 
         @Test
         void testAtualizarCargoInexistente() {
-            when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.empty());
+            Cargo cargo = MockUtils.idPadrao(new Cargo());
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.empty());
 
             Usuario usuario = MockUtils.criarUsuarioAdmin();
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
 
-            assertThrows(EntityNotFoundException.class, () -> cargoService.atualizar(1L, dados, usuario));
+            assertThrows(EntityNotFoundException.class, () -> cargoService.atualizar(cargo.getId(), dados, usuario));
         }
 
         @Test
         void testAtualizarComUsuarioNaoAdmin() {
-            Cargo cargo = new Cargo();
-            cargo.setId(1L);
+            Cargo cargo = MockUtils.idPadrao(new Cargo());
             cargo.setNome("Antigo");
             cargo.setAtivo(true);
 
-            when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.of(cargo));
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.of(cargo));
 
             Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.GESTOR);
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
 
-            assertThrows(AutorizacaoException.class, () -> cargoService.atualizar(1L, dados, usuario));
+            assertThrows(AutorizacaoException.class, () -> cargoService.atualizar(cargo.getId(), dados, usuario));
         }
 
         @Test
         void testAtualizarComNomeInvalido() {
-            Cargo cargo = new Cargo();
-            cargo.setId(1L);
+            Cargo cargo = MockUtils.idPadrao(new Cargo());
             cargo.setNome(null);
             cargo.setAtivo(true);
 
-            when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.of(cargo));
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.of(cargo));
 
             Usuario usuario = MockUtils.criarUsuarioAdmin();
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
 
-            assertThrows(ValidacaoException.class, () -> cargoService.atualizar(1L, dados, usuario));
+            assertThrows(ValidacaoException.class, () -> cargoService.atualizar(cargo.getId(), dados, usuario));
         }
     }
 
@@ -139,24 +138,24 @@ public class CargoServiceTestNegativo {
 
         @Test
         void testDeletarCargoInexistente() {
-            when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.empty());
+            Cargo cargo = MockUtils.idPadrao(new Cargo());
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.empty());
 
             Usuario usuario = MockUtils.criarUsuarioAdmin();
 
-            assertThrows(EntityNotFoundException.class, () -> cargoService.deletar(1L, usuario));
+            assertThrows(EntityNotFoundException.class, () -> cargoService.deletar(cargo.getId(), usuario));
         }
 
         @Test
         void testDeletarComUsuarioTester() {
-            Cargo cargo = new Cargo();
-            cargo.setId(1L);
+            Cargo cargo = MockUtils.idPadrao(new Cargo());
             cargo.setAtivo(true);
 
-            when(cargoRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.of(cargo));
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.of(cargo));
 
             Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.TESTER);
 
-            assertThrows(AutorizacaoException.class, () -> cargoService.deletar(1L, usuario));
+            assertThrows(AutorizacaoException.class, () -> cargoService.deletar(cargo.getId(), usuario));
         }
     }
 
