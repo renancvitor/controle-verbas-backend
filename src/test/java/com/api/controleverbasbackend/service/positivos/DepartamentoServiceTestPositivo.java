@@ -9,11 +9,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
@@ -24,6 +29,7 @@ import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
+import com.api.controleverbasbackend.dto.departamento.DadosListagemDepartamento;
 import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 import com.api.controleverbasbackend.repository.DepartamentoRepository;
 import com.api.controleverbasbackend.service.DepartamentoService;
@@ -115,6 +121,23 @@ public class DepartamentoServiceTestPositivo {
 
     @Test
     void testListar() {
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
 
+        Departamento departamento1 = new Departamento();
+        departamento1.setNome("RH");
+
+        Departamento departamento2 = new Departamento();
+        departamento2.setNome("Faturamento");
+
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Departamento> departamentosAtivos = List.of(departamento1, departamento2);
+
+        when(departamentoRepository.findAllByAtivo(true, pageable))
+                .thenReturn(new PageImpl<>(departamentosAtivos));
+
+        Page<DadosListagemDepartamento> resultado = departamentoService.listar(pageable, usuario, true);
+
+        assertEquals(2, resultado.getTotalElements());
+        assertEquals("Faturamento", resultado.getContent().get(1).nome());
     }
 }
