@@ -1,7 +1,11 @@
 package com.api.controleverbasbackend.service.positivos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -17,6 +21,7 @@ import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
+import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
 import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 import com.api.controleverbasbackend.repository.DepartamentoRepository;
@@ -80,7 +85,16 @@ public class DepartamentoServiceTestPositivo {
 
     @Test
     void testCadastrar() {
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
 
+        DadosCadastroDepartamento dados = new DadosCadastroDepartamento("Empresa");
+
+        DadosDetalhamentoDepartamento resultado = departamentoService.cadastrar(dados, usuario);
+
+        assertNotNull(resultado);
+        assertEquals("Empresa", resultado.nome());
+
+        verify(departamentoRepository, times(1)).save(any(Departamento.class));
     }
 
     @Test
