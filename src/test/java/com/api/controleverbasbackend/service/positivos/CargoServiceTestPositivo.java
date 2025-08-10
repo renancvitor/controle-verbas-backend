@@ -87,11 +87,7 @@ public class CargoServiceTestPositivo {
 
     @Test
     void testCadastrar() {
-        TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
-        tipoUsuarioEntidade.setId(TipoUsuarioEnum.ADMIN.getId());
-
-        Usuario usuario = new Usuario();
-        usuario.setTipoUsuario(tipoUsuarioEntidade);
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
 
         DadosCadastroCargo dados = new DadosCadastroCargo("Administrador");
 
