@@ -23,8 +23,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.controleverbasbackend.domain.cargo.Cargo;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
@@ -107,11 +105,7 @@ public class CargoServiceTestPositivo {
         when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
                 .thenReturn(Optional.of(cargo));
 
-        TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
-        tipoUsuarioEntidade.setId(TipoUsuarioEnum.ADMIN.getId());
-
-        Usuario usuario = new Usuario();
-        usuario.setTipoUsuario(tipoUsuarioEntidade);
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
 
         cargoService.deletar(cargo.getId(), usuario);
 
@@ -120,11 +114,7 @@ public class CargoServiceTestPositivo {
 
     @Test
     void testListar() {
-        TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
-        tipoUsuarioEntidade.setId(TipoUsuarioEnum.ADMIN.getId());
-
-        Usuario usuario = new Usuario();
-        usuario.setTipoUsuario(tipoUsuarioEntidade);
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
 
         Cargo cargo1 = new Cargo();
         cargo1.setNome("Analista");
