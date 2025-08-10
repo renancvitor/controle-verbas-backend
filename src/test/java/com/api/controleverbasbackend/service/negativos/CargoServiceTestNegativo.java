@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.controleverbasbackend.domain.cargo.Cargo;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
@@ -34,10 +34,10 @@ import jakarta.persistence.EntityNotFoundException;
 @ActiveProfiles("test")
 public class CargoServiceTestNegativo {
 
-    @MockBean
+    @MockitoBean
     private LogProducer logProducer;
 
-    @MockBean
+    @MockitoBean
     private CargoRepository cargoRepository;
 
     @Autowired

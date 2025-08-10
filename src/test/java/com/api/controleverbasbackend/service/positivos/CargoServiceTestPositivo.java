@@ -15,12 +15,12 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.controleverbasbackend.domain.cargo.Cargo;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
@@ -39,10 +39,10 @@ import com.api.controleverbasbackend.utils.MockUtils;
 @ActiveProfiles("test")
 public class CargoServiceTestPositivo {
 
-    @MockBean
+    @MockitoBean
     private LogProducer logProducer;
 
-    @MockBean
+    @MockitoBean
     private CargoRepository cargoRepository;
 
     @Autowired
@@ -73,14 +73,10 @@ public class CargoServiceTestPositivo {
         cargo.setNome(nomeAtual);
         cargo.setAtivo(true);
 
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
+
         when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
                 .thenReturn(Optional.of(cargo));
-
-        TipoUsuarioEntidade tipoUsuarioEntidade = new TipoUsuarioEntidade();
-        tipoUsuarioEntidade.setId(TipoUsuarioEnum.ADMIN.getId());
-
-        Usuario usuario = new Usuario();
-        usuario.setTipoUsuario(tipoUsuarioEntidade);
 
         DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo(novoNome);
 
