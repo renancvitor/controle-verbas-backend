@@ -62,7 +62,7 @@ public class DepartamentoServiceTestPositivo {
 
         Departamento departamento = MockUtils.idPadrao(new Departamento());
         departamento.setAtivo(false);
-        departamento.setNome(novoNome);
+        departamento.setNome(nomeAtual);
         departamento.setAtivo(true);
 
         Usuario usuario = MockUtils.criarUsuarioAdmin();
