@@ -1,5 +1,6 @@
 package com.api.controleverbasbackend.service.positivos;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -8,13 +9,15 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.controleverbasbackend.domain.departamento.Departamento;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
+import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
 import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
 import com.api.controleverbasbackend.repository.DepartamentoRepository;
 import com.api.controleverbasbackend.service.DepartamentoService;
@@ -24,10 +27,10 @@ import com.api.controleverbasbackend.utils.MockUtils;
 @ActiveProfiles("test")
 public class DepartamentoServiceTestPositivo {
 
-    @MockBean
+    @MockitoBean
     private LogProducer logProducer;
 
-    @MockBean
+    @MockitoBean
     private DepartamentoRepository departamentoRepository;
 
     @Autowired
@@ -54,7 +57,25 @@ public class DepartamentoServiceTestPositivo {
 
     @Test
     void testAtualizar() {
+        String nomeAtual = "Departamento Atual";
+        String novoNome = "Empresa";
 
+        Departamento departamento = MockUtils.idPadrao(new Departamento());
+        departamento.setAtivo(false);
+        departamento.setNome(novoNome);
+        departamento.setAtivo(true);
+
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
+
+        when(departamentoRepository.findByIdAndAtivoTrue(departamento.getId()))
+                .thenReturn(Optional.of(departamento));
+
+        DadosAtualizacaoDepartamento dados = new DadosAtualizacaoDepartamento(novoNome);
+
+        DadosDetalhamentoDepartamento resultado = departamentoService
+                .atualizar(departamento.getId(), dados, usuario);
+
+        assertEquals(novoNome, resultado.nome());
     }
 
     @Test
