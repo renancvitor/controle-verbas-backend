@@ -1,6 +1,7 @@
 package com.api.controleverbasbackend.service.positivos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -99,7 +100,17 @@ public class DepartamentoServiceTestPositivo {
 
     @Test
     void testDeletar() {
+        Departamento departamento = MockUtils.idPadrao(new Departamento());
+        departamento.setAtivo(true);
 
+        when(departamentoRepository.findByIdAndAtivoTrue(departamento.getId()))
+                .thenReturn(Optional.of(departamento));
+
+        Usuario usuario = MockUtils.criarUsuarioAdmin();
+
+        departamentoService.deletar(departamento.getId(), usuario);
+
+        assertFalse(departamento.getAtivo());
     }
 
     @Test
