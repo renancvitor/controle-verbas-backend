@@ -26,11 +26,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class PessoaServiceTestPositivo {
 
     @Mock
@@ -70,7 +72,7 @@ class PessoaServiceTestPositivo {
     }
 
     @Test
-    void ativar() {
+    void testAtivar() {
         pessoa.setAtivo(false);
         when(pessoaRepository.findByIdAndAtivoFalse(1L)).thenReturn(Optional.of(pessoa));
 
@@ -80,7 +82,7 @@ class PessoaServiceTestPositivo {
     }
 
     @Test
-    void atualizar() {
+    void testAtualizar() {
         Departamento departamento = MockUtils.idPadrao(new Departamento());
         departamento.setNome("TI");
         Cargo cargo = MockUtils.idPadrao(new Cargo());
@@ -116,7 +118,7 @@ class PessoaServiceTestPositivo {
     }
 
     @Test
-    void cadastrar() {
+    void testCadastrar() {
         DadosCadastroPessoa dadosPessoa = new DadosCadastroPessoa(
                 "Fulano", "12345678900", "email@email.com",
                 departamento.getId(), cargo.getId());
@@ -134,7 +136,7 @@ class PessoaServiceTestPositivo {
     }
 
     @Test
-    void deletar() {
+    void testDeletar() {
         when(pessoaRepository.findByIdAndAtivoTrue(1L)).thenReturn(Optional.of(pessoa));
 
         pessoaService.deletar(1L, usuarioAdmin);
@@ -143,7 +145,7 @@ class PessoaServiceTestPositivo {
     }
 
     @Test
-    void listarComAtivoTrue() {
+    void testListarComAtivoTrue() {
         Page<Pessoa> pagina = new PageImpl<>(List.of(pessoa));
         when(pessoaRepository.findAllByAtivo(true, PageRequest.of(0, 10))).thenReturn(pagina);
 
@@ -154,7 +156,7 @@ class PessoaServiceTestPositivo {
     }
 
     @Test
-    void listarSemFiltro() {
+    void testListarSemFiltro() {
         Page<Pessoa> pagina = new PageImpl<>(List.of(pessoa));
         when(pessoaRepository.findAll(PageRequest.of(0, 10))).thenReturn(pagina);
 
