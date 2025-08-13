@@ -51,7 +51,8 @@ public class CargoServiceTestNegativo {
     @Test
     void testAtivarComCargoInexistente() {
         Cargo cargo = MockUtils.idPadrao(new Cargo());
-        when(cargoRepository.findByIdAndAtivoFalse(cargo.getId())).thenReturn(Optional.empty());
+        when(cargoRepository.findByIdAndAtivoFalse(cargo.getId()))
+                .thenReturn(Optional.empty());
 
         Usuario usuario = MockUtils.criarUsuarioAdmin();
 
@@ -63,7 +64,8 @@ public class CargoServiceTestNegativo {
         Cargo cargo = MockUtils.idPadrao(new Cargo());
         cargo.setAtivo(false);
 
-        when(cargoRepository.findByIdAndAtivoFalse(cargo.getId())).thenReturn(Optional.of(cargo));
+        when(cargoRepository.findByIdAndAtivoFalse(cargo.getId()))
+                .thenReturn(Optional.of(cargo));
 
         Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.TESTER);
 
@@ -76,7 +78,8 @@ public class CargoServiceTestNegativo {
         @Test
         void testAtualizarCargoInexistente() {
             Cargo cargo = MockUtils.idPadrao(new Cargo());
-            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.empty());
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
+                    .thenReturn(Optional.empty());
 
             Usuario usuario = MockUtils.criarUsuarioAdmin();
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
@@ -90,7 +93,8 @@ public class CargoServiceTestNegativo {
             cargo.setNome("Antigo");
             cargo.setAtivo(true);
 
-            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.of(cargo));
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
+                    .thenReturn(Optional.of(cargo));
 
             Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.GESTOR);
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
@@ -104,7 +108,8 @@ public class CargoServiceTestNegativo {
             cargo.setNome(null);
             cargo.setAtivo(true);
 
-            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.of(cargo));
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
+                    .thenReturn(Optional.of(cargo));
 
             Usuario usuario = MockUtils.criarUsuarioAdmin();
             DadosAtualizacaoCargo dados = new DadosAtualizacaoCargo("Novo Nome");
@@ -139,7 +144,8 @@ public class CargoServiceTestNegativo {
         @Test
         void testDeletarCargoInexistente() {
             Cargo cargo = MockUtils.idPadrao(new Cargo());
-            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.empty());
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
+                    .thenReturn(Optional.empty());
 
             Usuario usuario = MockUtils.criarUsuarioAdmin();
 
@@ -151,7 +157,8 @@ public class CargoServiceTestNegativo {
             Cargo cargo = MockUtils.idPadrao(new Cargo());
             cargo.setAtivo(true);
 
-            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId())).thenReturn(Optional.of(cargo));
+            when(cargoRepository.findByIdAndAtivoTrue(cargo.getId()))
+                    .thenReturn(Optional.of(cargo));
 
             Usuario usuario = MockUtils.criarUsuario(TipoUsuarioEnum.TESTER);
 

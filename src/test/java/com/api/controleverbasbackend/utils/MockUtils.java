@@ -1,5 +1,6 @@
 package com.api.controleverbasbackend.utils;
 
+import com.api.controleverbasbackend.domain.pessoa.Pessoa;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
 import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.domain.usuario.Usuario;
@@ -14,8 +15,13 @@ public class MockUtils {
         TipoUsuarioEntidade tipoUsuario = new TipoUsuarioEntidade();
         tipoUsuario.setId(tipo.getId());
 
+        Pessoa pessoa = new Pessoa();
+        pessoa.setNome(tipo.name() + " Teste");
+
         Usuario usuario = new Usuario();
         usuario.setTipoUsuario(tipoUsuario);
+        usuario.setPessoa(pessoa);
+
         return usuario;
     }
 
