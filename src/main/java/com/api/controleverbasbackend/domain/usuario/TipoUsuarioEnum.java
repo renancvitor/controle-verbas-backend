@@ -1,7 +1,6 @@
 package com.api.controleverbasbackend.domain.usuario;
 
 public enum TipoUsuarioEnum {
-
     ADMIN(1),
     GESTOR(2),
     TESOUREIRO(3),

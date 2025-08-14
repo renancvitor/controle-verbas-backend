@@ -63,13 +63,10 @@ public class LogAspect {
         boolean proceeded = false;
 
         for (Loggable loggable : loggings) {
-            // Para evitar executar o método múltiplas vezes,
-            // executa joinPoint.proceed() apenas na primeira iteração.
             if (!proceeded) {
                 retorno = executarLog(joinPoint, loggable);
                 proceeded = true;
             } else {
-                // Só gera logs sem executar o método novamente
                 gerarLogApenas(loggable, retorno, joinPoint.getArgs());
             }
         }
@@ -84,7 +81,6 @@ public class LogAspect {
 
         Object estadoAntigo = null;
 
-        // Pega estado antigo SOMENTE se for PRE_UPDATE
         if (tipo == TipoLog.PRE_UPDATE) {
             Object id = extrairIdDoMetodo(joinPoint.getArgs());
             if (id != null) {
@@ -106,7 +102,7 @@ public class LogAspect {
             logProducer.enviarLog(criarLog(usuario, tipo, entidadeNome, estadoNovo,
                     "Estado APÓS a alteração em " + entidadeNome));
         } else if (tipo == TipoLog.LOGIN) {
-            String usuarioEmail = "sistema"; // fallback
+            String usuarioEmail = "sistema";
 
             if (estadoNovo instanceof ResponseEntity<?> responseEntity) {
                 Object body = responseEntity.getBody();

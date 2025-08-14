@@ -8,7 +8,7 @@ import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Loggable {
-    TipoLog tipo(); // Tipo da ação: INSERT, DELETE, etc.
+    TipoLog tipo();
 
-    String entidade(); // Nome da entidade sendo manipulada (ex: "Usuario")
+    String entidade();
 }

@@ -19,6 +19,7 @@ import com.api.controleverbasbackend.utils.MockUtils;
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 public class TokenServiceTestPositivo {
+
     @InjectMocks
     private TokenService tokenService;
 

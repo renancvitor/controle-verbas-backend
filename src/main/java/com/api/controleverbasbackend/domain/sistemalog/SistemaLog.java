@@ -26,19 +26,19 @@ public class SistemaLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String tipo; // INSERT, PRE_UPDATE, POST_UPDATE, DELETE
+    private String tipo;
 
-    private String entidade; // Ex: "Usuario", "Pessoa", etc.
+    private String entidade;
 
     private String usuario;
 
     private LocalDateTime dataHora;
 
     @Column(columnDefinition = "TEXT")
-    private String payload; // Estado do objeto em JSON (antes ou depois)
+    private String payload;
 
     @Column(columnDefinition = "TEXT")
-    private String mensagem; // Ex: "Usuário atualizado com sucesso"
+    private String mensagem;
 
     @PrePersist
     public void prePersist() {

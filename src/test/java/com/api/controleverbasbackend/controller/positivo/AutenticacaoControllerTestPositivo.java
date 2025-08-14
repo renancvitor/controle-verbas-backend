@@ -26,6 +26,7 @@ import com.api.controleverbasbackend.service.TokenService;
 @WebMvcTest(AutenticacaoController.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class AutenticacaoControllerTestPositivo {
+
     @Autowired
     private MockMvc mockMvc;
 

@@ -34,6 +34,7 @@ import java.util.List;
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 public class UsuarioServiceTestPositivo {
+
     @Mock
     private PasswordEncoder passwordEncoder;
 
