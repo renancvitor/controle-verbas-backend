@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.api.controleverbasbackend.domain.departamento.Departamento;
+import com.api.controleverbasbackend.domain.entity.departamento.Departamento;
 
 public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
     Optional<Departamento> findByNome(String nome);

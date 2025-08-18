@@ -9,16 +9,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.api.controleverbasbackend.domain.orcamento.Orcamento;
-import com.api.controleverbasbackend.domain.orcamento.StatusOrcamentoEntidade;
-import com.api.controleverbasbackend.domain.orcamento.StatusOrcamentoEnum;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.orcamento.Orcamento;
+import com.api.controleverbasbackend.domain.entity.orcamento.StatusOrcamentoEntidade;
+import com.api.controleverbasbackend.domain.enums.orcamento.StatusOrcamentoEnum;
+import com.api.controleverbasbackend.domain.enums.usuario.TipoUsuarioEnum;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosDetalhamentoOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosListagemOrcamento;
-import com.api.controleverbasbackend.infra.exception.AutorizacaoException;
-import com.api.controleverbasbackend.infra.exception.ValidacaoException;
+import com.api.controleverbasbackend.exception.AutorizacaoException;
+import com.api.controleverbasbackend.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.OrcamentoRepository;
 import com.api.controleverbasbackend.repository.StatusOrcamentoRepository;
 

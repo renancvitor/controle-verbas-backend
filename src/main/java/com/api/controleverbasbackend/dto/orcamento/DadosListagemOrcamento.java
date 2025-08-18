@@ -3,7 +3,7 @@ package com.api.controleverbasbackend.dto.orcamento;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.api.controleverbasbackend.domain.orcamento.Orcamento;
+import com.api.controleverbasbackend.domain.entity.orcamento.Orcamento;
 
 public record DadosListagemOrcamento(
         Long id,

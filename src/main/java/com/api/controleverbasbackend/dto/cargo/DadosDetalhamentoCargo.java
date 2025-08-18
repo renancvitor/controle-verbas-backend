@@ -1,6 +1,6 @@
 package com.api.controleverbasbackend.dto.cargo;
 
-import com.api.controleverbasbackend.domain.cargo.Cargo;
+import com.api.controleverbasbackend.domain.entity.cargo.Cargo;
 
 public record DadosDetalhamentoCargo(Long id, String nome) {
 

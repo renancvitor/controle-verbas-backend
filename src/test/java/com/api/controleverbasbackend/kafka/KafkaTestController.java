@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.controleverbasbackend.domain.sistemalog.SistemaLog;
-import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
+import com.api.controleverbasbackend.domain.entity.sistemalog.SistemaLog;
+import com.api.controleverbasbackend.infra.messaging.kafka.LogProducer;
 
 @RestController
 public class KafkaTestController {

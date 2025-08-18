@@ -23,7 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.api.controleverbasbackend.controller.UsuarioController;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioSenha;
 import com.api.controleverbasbackend.dto.usuario.DadosDetalhamentoUsuario;
 import com.api.controleverbasbackend.dto.usuario.DadosListagemUsuario;

@@ -21,7 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.api.controleverbasbackend.controller.OrcamentoController;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosDetalhamentoOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosListagemOrcamento;

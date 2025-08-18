@@ -23,8 +23,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.api.controleverbasbackend.controller.PessoaController;
-import com.api.controleverbasbackend.domain.pessoa.Pessoa;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.pessoa.Pessoa;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.pessoa.DadosAtualizacaoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoaUsuario;

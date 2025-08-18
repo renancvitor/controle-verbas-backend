@@ -16,7 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.api.controleverbasbackend.controller.DepartamentoController;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.service.DepartamentoService;

@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
+import com.api.controleverbasbackend.domain.enums.sistemalog.TipoLog;
 import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosListagemDepartamento;
-import com.api.controleverbasbackend.infra.mensageria.log.Loggable;
-import com.api.controleverbasbackend.infra.mensageria.log.Loggables;
+import com.api.controleverbasbackend.infra.messaging.log.Loggable;
+import com.api.controleverbasbackend.infra.messaging.log.Loggables;
 import com.api.controleverbasbackend.service.DepartamentoService;
 
 import jakarta.validation.Valid;
@@ -35,61 +35,62 @@ import jakarta.validation.Valid;
 @RequestMapping("/departamentos")
 public class DepartamentoController {
 
-    @Autowired
-    private DepartamentoService departamentoService;
+        @Autowired
+        private DepartamentoService departamentoService;
 
-    @GetMapping
-    public ResponseEntity<Page<DadosListagemDepartamento>> listar(@RequestParam(required = false) Boolean ativo,
-            @PageableDefault(size = 5000, sort = ("nome")) Pageable pageable,
-            @AuthenticationPrincipal Usuario usuario) {
-        Page<DadosListagemDepartamento> page = departamentoService.listar(pageable, usuario, ativo);
-        return ResponseEntity.ok(page);
-    }
+        @GetMapping
+        public ResponseEntity<Page<DadosListagemDepartamento>> listar(@RequestParam(required = false) Boolean ativo,
+                        @PageableDefault(size = 5000, sort = ("nome")) Pageable pageable,
+                        @AuthenticationPrincipal Usuario usuario) {
+                Page<DadosListagemDepartamento> page = departamentoService.listar(pageable, usuario, ativo);
+                return ResponseEntity.ok(page);
+        }
 
-    @PostMapping
-    @Loggables({
-            @Loggable(tipo = TipoLog.INSERT, entidade = "Departamento"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
-    })
-    public ResponseEntity<DadosDetalhamentoDepartamento> cadastrar(@RequestBody @Valid DadosCadastroDepartamento dados,
-            UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
-        DadosDetalhamentoDepartamento departamento = departamentoService.cadastrar(dados, usuario);
-        URI uri = uriComponentsBuilder.path("/departamentos/{id}")
-                .buildAndExpand(departamento.id())
-                .toUri();
+        @PostMapping
+        @Loggables({
+                        @Loggable(tipo = TipoLog.INSERT, entidade = "Departamento"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
+        })
+        public ResponseEntity<DadosDetalhamentoDepartamento> cadastrar(
+                        @RequestBody @Valid DadosCadastroDepartamento dados,
+                        UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
+                DadosDetalhamentoDepartamento departamento = departamentoService.cadastrar(dados, usuario);
+                URI uri = uriComponentsBuilder.path("/departamentos/{id}")
+                                .buildAndExpand(departamento.id())
+                                .toUri();
 
-        return ResponseEntity.created(uri).body(departamento);
-    }
+                return ResponseEntity.created(uri).body(departamento);
+        }
 
-    @PutMapping("/{id}")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
-    })
-    public ResponseEntity<DadosDetalhamentoDepartamento> atualizar(@PathVariable Long id,
-            @RequestBody @Valid DadosAtualizacaoDepartamento dados,
-            @AuthenticationPrincipal Usuario usuario) {
-        DadosDetalhamentoDepartamento dadosDepartamento = departamentoService.atualizar(id, dados, usuario);
-        return ResponseEntity.ok(dadosDepartamento);
-    }
+        @PutMapping("/{id}")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
+        })
+        public ResponseEntity<DadosDetalhamentoDepartamento> atualizar(@PathVariable Long id,
+                        @RequestBody @Valid DadosAtualizacaoDepartamento dados,
+                        @AuthenticationPrincipal Usuario usuario) {
+                DadosDetalhamentoDepartamento dadosDepartamento = departamentoService.atualizar(id, dados, usuario);
+                return ResponseEntity.ok(dadosDepartamento);
+        }
 
-    @DeleteMapping("/{id}")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
-    })
-    public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
-        departamentoService.deletar(id, usuario);
-        return ResponseEntity.noContent().build();
-    }
+        @DeleteMapping("/{id}")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
+        })
+        public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+                departamentoService.deletar(id, usuario);
+                return ResponseEntity.noContent().build();
+        }
 
-    @PutMapping("/{id}/ativar")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
-    })
-    public ResponseEntity<Void> ativar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
-        departamentoService.ativar(id, usuario);
-        return ResponseEntity.noContent().build();
-    }
+        @PutMapping("/{id}/ativar")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Departamento"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Departamento")
+        })
+        public ResponseEntity<Void> ativar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+                departamentoService.ativar(id, usuario);
+                return ResponseEntity.noContent().build();
+        }
 }

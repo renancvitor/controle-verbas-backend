@@ -1,6 +1,6 @@
 package com.api.controleverbasbackend.dto.usuario;
 
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 
 public record DadosDetalhamentoUsuario(Long id, String cpfPessoa, String emailPessoa,
         String nomeTipoUsuario) {

@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.autenticacao.DadosLogin;
 import com.api.controleverbasbackend.dto.autenticacao.DadosTokenJWT;
 import com.api.controleverbasbackend.dto.usuario.DadosResumidoUsuario;

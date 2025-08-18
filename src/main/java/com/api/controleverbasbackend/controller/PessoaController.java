@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
+import com.api.controleverbasbackend.domain.enums.sistemalog.TipoLog;
 import com.api.controleverbasbackend.dto.pessoa.DadosAtualizacaoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoaUsuario;
 import com.api.controleverbasbackend.dto.pessoa.DadosDetalhamentoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosListagemPessoa;
-import com.api.controleverbasbackend.infra.mensageria.log.Loggable;
-import com.api.controleverbasbackend.infra.mensageria.log.Loggables;
+import com.api.controleverbasbackend.infra.messaging.log.Loggable;
+import com.api.controleverbasbackend.infra.messaging.log.Loggables;
 import com.api.controleverbasbackend.service.PessoaService;
 
 import jakarta.validation.Valid;
@@ -35,63 +35,64 @@ import jakarta.validation.Valid;
 @RequestMapping("/pessoas")
 public class PessoaController {
 
-    @Autowired
-    private PessoaService pessoaService;
+        @Autowired
+        private PessoaService pessoaService;
 
-    @GetMapping
-    public ResponseEntity<Page<DadosListagemPessoa>> listar(@RequestParam(required = false) Boolean ativo,
-            @PageableDefault(size = 5000, sort = ("nome")) Pageable pageable,
-            @AuthenticationPrincipal Usuario usuario) {
-        Page<DadosListagemPessoa> page = pessoaService.listar(pageable, usuario, ativo);
-        return ResponseEntity.ok(page);
-    }
+        @GetMapping
+        public ResponseEntity<Page<DadosListagemPessoa>> listar(@RequestParam(required = false) Boolean ativo,
+                        @PageableDefault(size = 5000, sort = ("nome")) Pageable pageable,
+                        @AuthenticationPrincipal Usuario usuario) {
+                Page<DadosListagemPessoa> page = pessoaService.listar(pageable, usuario, ativo);
+                return ResponseEntity.ok(page);
+        }
 
-    @PostMapping
-    @Loggables({
-            @Loggable(tipo = TipoLog.INSERT, entidade = "Pessoa"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Pessoa")
-    })
-    public ResponseEntity<DadosDetalhamentoPessoa> cadastrar(
-            @RequestBody @Valid DadosCadastroPessoaUsuario dadosCadastro,
-            UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
-        DadosDetalhamentoPessoa pessoa = pessoaService.cadastrar(dadosCadastro.pessoa(), dadosCadastro.usuario(),
-                usuario);
-        URI uri = uriComponentsBuilder.path("/pessoas/{id}")
-                .buildAndExpand(pessoa.id())
-                .toUri();
+        @PostMapping
+        @Loggables({
+                        @Loggable(tipo = TipoLog.INSERT, entidade = "Pessoa"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Pessoa")
+        })
+        public ResponseEntity<DadosDetalhamentoPessoa> cadastrar(
+                        @RequestBody @Valid DadosCadastroPessoaUsuario dadosCadastro,
+                        UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
+                DadosDetalhamentoPessoa pessoa = pessoaService.cadastrar(dadosCadastro.pessoa(),
+                                dadosCadastro.usuario(),
+                                usuario);
+                URI uri = uriComponentsBuilder.path("/pessoas/{id}")
+                                .buildAndExpand(pessoa.id())
+                                .toUri();
 
-        return ResponseEntity.created(uri).body(pessoa);
-    }
+                return ResponseEntity.created(uri).body(pessoa);
+        }
 
-    @PutMapping("/{id}")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Pessoa"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Pessoa")
-    })
-    public ResponseEntity<DadosDetalhamentoPessoa> atualizar(@PathVariable Long id,
-            @RequestBody @Valid DadosAtualizacaoPessoa dados,
-            @AuthenticationPrincipal Usuario usuario) {
-        DadosDetalhamentoPessoa dadosPessoa = pessoaService.atualizar(id, dados, usuario);
-        return ResponseEntity.ok(dadosPessoa);
-    }
+        @PutMapping("/{id}")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Pessoa"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Pessoa")
+        })
+        public ResponseEntity<DadosDetalhamentoPessoa> atualizar(@PathVariable Long id,
+                        @RequestBody @Valid DadosAtualizacaoPessoa dados,
+                        @AuthenticationPrincipal Usuario usuario) {
+                DadosDetalhamentoPessoa dadosPessoa = pessoaService.atualizar(id, dados, usuario);
+                return ResponseEntity.ok(dadosPessoa);
+        }
 
-    @DeleteMapping("/{id}")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Pessoa"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Pessoa")
-    })
-    public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
-        pessoaService.deletar(id, usuario);
-        return ResponseEntity.noContent().build();
-    }
+        @DeleteMapping("/{id}")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Pessoa"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Pessoa")
+        })
+        public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+                pessoaService.deletar(id, usuario);
+                return ResponseEntity.noContent().build();
+        }
 
-    @PutMapping("/{id}/ativar")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Pessoa"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Pessoa")
-    })
-    public ResponseEntity<Void> ativar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
-        pessoaService.ativar(id, usuario);
-        return ResponseEntity.noContent().build();
-    }
+        @PutMapping("/{id}/ativar")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Pessoa"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Pessoa")
+        })
+        public ResponseEntity<Void> ativar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+                pessoaService.ativar(id, usuario);
+                return ResponseEntity.noContent().build();
+        }
 }

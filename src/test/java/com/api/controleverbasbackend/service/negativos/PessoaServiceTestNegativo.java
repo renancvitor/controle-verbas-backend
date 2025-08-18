@@ -5,9 +5,9 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
-import com.api.controleverbasbackend.domain.pessoa.Pessoa;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
+import com.api.controleverbasbackend.domain.entity.pessoa.Pessoa;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
+import com.api.controleverbasbackend.domain.enums.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.repository.PessoaRepository;
 import com.api.controleverbasbackend.repository.DepartamentoRepository;
 import com.api.controleverbasbackend.repository.CargoRepository;
@@ -19,7 +19,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoa;
 import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
-import com.api.controleverbasbackend.infra.exception.AutorizacaoException;
+import com.api.controleverbasbackend.exception.AutorizacaoException;
 import com.api.controleverbasbackend.dto.pessoa.DadosAtualizacaoPessoa;
 
 import org.junit.jupiter.api.BeforeEach;

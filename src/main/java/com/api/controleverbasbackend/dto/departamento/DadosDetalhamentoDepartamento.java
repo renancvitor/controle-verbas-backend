@@ -1,6 +1,6 @@
 package com.api.controleverbasbackend.dto.departamento;
 
-import com.api.controleverbasbackend.domain.departamento.Departamento;
+import com.api.controleverbasbackend.domain.entity.departamento.Departamento;
 
 public record DadosDetalhamentoDepartamento(Long id, String nome) {
 

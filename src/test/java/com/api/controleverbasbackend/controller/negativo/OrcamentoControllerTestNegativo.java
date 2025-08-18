@@ -16,7 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.api.controleverbasbackend.controller.OrcamentoController;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.service.OrcamentoService;
 import com.api.controleverbasbackend.utils.MockUtils;

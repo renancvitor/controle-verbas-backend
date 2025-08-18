@@ -2,7 +2,7 @@ package com.api.controleverbasbackend.dto.pessoa;
 
 import java.time.LocalDateTime;
 
-import com.api.controleverbasbackend.domain.pessoa.Pessoa;
+import com.api.controleverbasbackend.domain.entity.pessoa.Pessoa;
 
 public record DadosListagemPessoa(Long id, String nome, String cpf, String email,
         String nomeDepartamento, String nomeCargo, LocalDateTime dataCadastro, Boolean ativo) {

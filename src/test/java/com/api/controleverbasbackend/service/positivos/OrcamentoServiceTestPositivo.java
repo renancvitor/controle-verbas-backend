@@ -27,11 +27,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.api.controleverbasbackend.domain.orcamento.Orcamento;
-import com.api.controleverbasbackend.domain.orcamento.StatusOrcamentoEntidade;
-import com.api.controleverbasbackend.domain.orcamento.StatusOrcamentoEnum;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.orcamento.Orcamento;
+import com.api.controleverbasbackend.domain.entity.orcamento.StatusOrcamentoEntidade;
+import com.api.controleverbasbackend.domain.enums.orcamento.StatusOrcamentoEnum;
+import com.api.controleverbasbackend.domain.enums.usuario.TipoUsuarioEnum;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosDetalhamentoOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosListagemOrcamento;

@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import com.api.controleverbasbackend.domain.cargo.Cargo;
-import com.api.controleverbasbackend.domain.departamento.Departamento;
-import com.api.controleverbasbackend.domain.pessoa.Pessoa;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.cargo.Cargo;
+import com.api.controleverbasbackend.domain.entity.departamento.Departamento;
+import com.api.controleverbasbackend.domain.entity.pessoa.Pessoa;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
+import com.api.controleverbasbackend.domain.enums.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.dto.pessoa.*;
 import com.api.controleverbasbackend.dto.usuario.DadosCadastroUsuario;
 import com.api.controleverbasbackend.repository.CargoRepository;

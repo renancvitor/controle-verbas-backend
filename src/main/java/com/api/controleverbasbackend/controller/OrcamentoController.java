@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.api.controleverbasbackend.domain.sistemalog.TipoLog;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
+import com.api.controleverbasbackend.domain.enums.sistemalog.TipoLog;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosDetalhamentoOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosListagemOrcamento;
-import com.api.controleverbasbackend.infra.mensageria.log.Loggable;
-import com.api.controleverbasbackend.infra.mensageria.log.Loggables;
+import com.api.controleverbasbackend.infra.messaging.log.Loggable;
+import com.api.controleverbasbackend.infra.messaging.log.Loggables;
 import com.api.controleverbasbackend.service.OrcamentoService;
 
 import jakarta.validation.Valid;
@@ -33,66 +33,66 @@ import jakarta.validation.Valid;
 @RequestMapping("/orcamentos")
 public class OrcamentoController {
 
-    @Autowired
-    private OrcamentoService orcamentoService;
+        @Autowired
+        private OrcamentoService orcamentoService;
 
-    @GetMapping
-    public ResponseEntity<Page<DadosListagemOrcamento>> listar(Optional<Integer> statusId,
-            @PageableDefault(size = 5000, sort = ("id")) Pageable pageable,
-            @AuthenticationPrincipal Usuario usuarioLogado) {
+        @GetMapping
+        public ResponseEntity<Page<DadosListagemOrcamento>> listar(Optional<Integer> statusId,
+                        @PageableDefault(size = 5000, sort = ("id")) Pageable pageable,
+                        @AuthenticationPrincipal Usuario usuarioLogado) {
 
-        Page<DadosListagemOrcamento> page = orcamentoService.listar(pageable, usuarioLogado, statusId);
-        return ResponseEntity.ok(page);
-    }
+                Page<DadosListagemOrcamento> page = orcamentoService.listar(pageable, usuarioLogado, statusId);
+                return ResponseEntity.ok(page);
+        }
 
-    @PostMapping
-    @Loggables({
-            @Loggable(tipo = TipoLog.INSERT, entidade = "Orcamento"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
-    })
-    public ResponseEntity<DadosDetalhamentoOrcamento> cadastrar(@RequestBody @Valid DadosCadastroOrcamento dados,
-            UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
+        @PostMapping
+        @Loggables({
+                        @Loggable(tipo = TipoLog.INSERT, entidade = "Orcamento"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
+        })
+        public ResponseEntity<DadosDetalhamentoOrcamento> cadastrar(@RequestBody @Valid DadosCadastroOrcamento dados,
+                        UriComponentsBuilder uriComponentsBuilder, @AuthenticationPrincipal Usuario usuario) {
 
-        DadosDetalhamentoOrcamento orcamento = orcamentoService.cadastrar(dados, usuario);
-        URI uri = uriComponentsBuilder.path("/orcamentos/{id}")
-                .buildAndExpand(orcamento.id())
-                .toUri();
+                DadosDetalhamentoOrcamento orcamento = orcamentoService.cadastrar(dados, usuario);
+                URI uri = uriComponentsBuilder.path("/orcamentos/{id}")
+                                .buildAndExpand(orcamento.id())
+                                .toUri();
 
-        return ResponseEntity.created(uri).body(orcamento);
-    }
+                return ResponseEntity.created(uri).body(orcamento);
+        }
 
-    @PutMapping("/{id}/aprovar")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
-    })
-    public ResponseEntity<DadosDetalhamentoOrcamento> aprovar(@PathVariable Long id,
-            @AuthenticationPrincipal Usuario usuario) {
+        @PutMapping("/{id}/aprovar")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
+        })
+        public ResponseEntity<DadosDetalhamentoOrcamento> aprovar(@PathVariable Long id,
+                        @AuthenticationPrincipal Usuario usuario) {
 
-        DadosDetalhamentoOrcamento dados = orcamentoService.aprovar(id, usuario);
-        return ResponseEntity.ok(dados);
-    }
+                DadosDetalhamentoOrcamento dados = orcamentoService.aprovar(id, usuario);
+                return ResponseEntity.ok(dados);
+        }
 
-    @PutMapping("/{id}/reprovar")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
-    })
-    public ResponseEntity<DadosDetalhamentoOrcamento> reprovar(@PathVariable Long id,
-            @AuthenticationPrincipal Usuario usuario) {
+        @PutMapping("/{id}/reprovar")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
+        })
+        public ResponseEntity<DadosDetalhamentoOrcamento> reprovar(@PathVariable Long id,
+                        @AuthenticationPrincipal Usuario usuario) {
 
-        DadosDetalhamentoOrcamento dados = orcamentoService.reprovar(id, usuario);
-        return ResponseEntity.ok(dados);
-    }
+                DadosDetalhamentoOrcamento dados = orcamentoService.reprovar(id, usuario);
+                return ResponseEntity.ok(dados);
+        }
 
-    @PutMapping("/{id}/liberar_verba")
-    @Loggables({
-            @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
-            @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
-    })
-    public ResponseEntity<DadosDetalhamentoOrcamento> liberarVerba(@PathVariable Long id,
-            @AuthenticationPrincipal Usuario usuario) {
-        DadosDetalhamentoOrcamento dados = orcamentoService.liberarVerba(id, usuario);
-        return ResponseEntity.ok(dados);
-    }
+        @PutMapping("/{id}/liberar_verba")
+        @Loggables({
+                        @Loggable(tipo = TipoLog.PRE_UPDATE, entidade = "Orcamento"),
+                        @Loggable(tipo = TipoLog.POST_UPDATE, entidade = "Orcamento")
+        })
+        public ResponseEntity<DadosDetalhamentoOrcamento> liberarVerba(@PathVariable Long id,
+                        @AuthenticationPrincipal Usuario usuario) {
+                DadosDetalhamentoOrcamento dados = orcamentoService.liberarVerba(id, usuario);
+                return ResponseEntity.ok(dados);
+        }
 }

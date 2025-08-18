@@ -19,7 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.autenticacao.DadosLogin;
 import com.api.controleverbasbackend.dto.autenticacao.DadosTokenJWT;
 import com.api.controleverbasbackend.repository.UsuarioRepository;

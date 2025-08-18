@@ -16,7 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.api.controleverbasbackend.controller.CargoController;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.service.CargoService;

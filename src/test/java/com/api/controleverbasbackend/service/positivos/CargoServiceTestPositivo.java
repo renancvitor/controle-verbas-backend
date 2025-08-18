@@ -22,13 +22,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import com.api.controleverbasbackend.domain.cargo.Cargo;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.cargo.Cargo;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
 import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
-import com.api.controleverbasbackend.infra.mensageria.kafka.LogProducer;
+import com.api.controleverbasbackend.infra.messaging.kafka.LogProducer;
 import com.api.controleverbasbackend.repository.CargoRepository;
 import com.api.controleverbasbackend.service.CargoService;
 import com.api.controleverbasbackend.utils.MockUtils;

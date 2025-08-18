@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
 
-import com.api.controleverbasbackend.domain.pessoa.Pessoa;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
+import com.api.controleverbasbackend.domain.entity.pessoa.Pessoa;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
+import com.api.controleverbasbackend.domain.enums.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.dto.usuario.*;
-import com.api.controleverbasbackend.infra.exception.AutorizacaoException;
-import com.api.controleverbasbackend.infra.exception.ValidacaoException;
+import com.api.controleverbasbackend.exception.AutorizacaoException;
+import com.api.controleverbasbackend.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.UsuarioRepository;
 import com.api.controleverbasbackend.repository.TipoUsuarioRepository;
 import com.api.controleverbasbackend.service.UsuarioService;

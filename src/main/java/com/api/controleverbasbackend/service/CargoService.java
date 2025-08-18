@@ -6,15 +6,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.api.controleverbasbackend.domain.cargo.Cargo;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.cargo.Cargo;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
+import com.api.controleverbasbackend.domain.enums.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
+import com.api.controleverbasbackend.exception.AutorizacaoException;
+import com.api.controleverbasbackend.exception.ValidacaoException;
 import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
-import com.api.controleverbasbackend.infra.exception.AutorizacaoException;
-import com.api.controleverbasbackend.infra.exception.ValidacaoException;
 import com.api.controleverbasbackend.repository.CargoRepository;
 
 import jakarta.persistence.EntityNotFoundException;

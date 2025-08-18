@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.api.controleverbasbackend.domain.cargo.Cargo;
-import com.api.controleverbasbackend.domain.departamento.Departamento;
-import com.api.controleverbasbackend.domain.pessoa.Pessoa;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEntidade;
-import com.api.controleverbasbackend.domain.usuario.TipoUsuarioEnum;
-import com.api.controleverbasbackend.domain.usuario.Usuario;
+import com.api.controleverbasbackend.domain.entity.cargo.Cargo;
+import com.api.controleverbasbackend.domain.entity.departamento.Departamento;
+import com.api.controleverbasbackend.domain.entity.pessoa.Pessoa;
+import com.api.controleverbasbackend.domain.entity.usuario.TipoUsuarioEntidade;
+import com.api.controleverbasbackend.domain.entity.usuario.Usuario;
+import com.api.controleverbasbackend.domain.enums.usuario.TipoUsuarioEnum;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosDetalhamentoOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosListagemOrcamento;
