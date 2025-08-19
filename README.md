@@ -100,7 +100,7 @@ O **Controle Verbas** é um backend desenvolvido com [Spring Boot](https://sprin
 
 ### 🌐 **API - Swagger**
 
-Para ver a interface [Swagger](https://swagger.io/specification/) em ação, acesse as [demonstrações visuais](./docs/swagger-demonstration.md) com GIFs interativos mostrando os principais endpoints da API.
+Para ver a interface [Swagger](https://swagger.io/specification/) em ação, acesse as [demonstrações visuais](./docs/documentacao-swagger.md) com GIFs interativos mostrando os principais endpoints da API.
 
 ### 🗂️ **Diagrama ER do banco de dados PostgreSQL**
 
