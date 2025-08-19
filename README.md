@@ -8,7 +8,7 @@
 
 Este backend possui um frontend totalmente integrado e funcional. Para explorar a interface de usuário, visite o repositório do frontend:
 
-- 🌐 [Controle Verbas — Frontend](https://github.com/seu-usuario/controle-verbas-frontend)
+- 🌐 [Controle Verbas — Frontend](https://github.com/renancvitor/controle-verbas-frontend)
 
 
 ---
