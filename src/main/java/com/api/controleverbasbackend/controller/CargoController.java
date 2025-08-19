@@ -24,8 +24,8 @@ import com.api.controleverbasbackend.domain.enums.sistemalog.TipoLog;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
-import com.api.controleverbasbackend.infra.messaging.log.Loggable;
-import com.api.controleverbasbackend.infra.messaging.log.Loggables;
+import com.api.controleverbasbackend.infra.logging.Loggable;
+import com.api.controleverbasbackend.infra.logging.Loggables;
 import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
 import com.api.controleverbasbackend.service.CargoService;
 

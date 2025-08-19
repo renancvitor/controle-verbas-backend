@@ -21,8 +21,8 @@ import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioSenha;
 import com.api.controleverbasbackend.dto.usuario.DadosAtualizacaoUsuarioTipo;
 import com.api.controleverbasbackend.dto.usuario.DadosDetalhamentoUsuario;
 import com.api.controleverbasbackend.dto.usuario.DadosListagemUsuario;
-import com.api.controleverbasbackend.infra.messaging.log.Loggable;
-import com.api.controleverbasbackend.infra.messaging.log.Loggables;
+import com.api.controleverbasbackend.infra.logging.Loggable;
+import com.api.controleverbasbackend.infra.logging.Loggables;
 import com.api.controleverbasbackend.service.UsuarioService;
 
 import jakarta.validation.Valid;

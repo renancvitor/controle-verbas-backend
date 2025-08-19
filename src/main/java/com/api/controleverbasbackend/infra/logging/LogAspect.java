@@ -1,10 +1,10 @@
-package com.api.controleverbasbackend.infra.messaging.log;
+package com.api.controleverbasbackend.infra.logging;
 
 import com.api.controleverbasbackend.domain.entity.sistemalog.SistemaLog;
 import com.api.controleverbasbackend.domain.enums.sistemalog.TipoLog;
 import com.api.controleverbasbackend.dto.autenticacao.DadosTokenJWT;
 import com.api.controleverbasbackend.dto.usuario.DadosResumidoUsuario;
-import com.api.controleverbasbackend.infra.messaging.kafka.LogProducer;
+import com.api.controleverbasbackend.infra.messaging.LogProducer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

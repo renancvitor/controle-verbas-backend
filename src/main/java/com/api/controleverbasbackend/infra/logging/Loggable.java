@@ -1,4 +1,4 @@
-package com.api.controleverbasbackend.infra.messaging.log;
+package com.api.controleverbasbackend.infra.logging;
 
 import java.lang.annotation.*;
 

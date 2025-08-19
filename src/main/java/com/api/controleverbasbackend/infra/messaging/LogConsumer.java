@@ -1,4 +1,4 @@
-package com.api.controleverbasbackend.infra.messaging.kafka;
+package com.api.controleverbasbackend.infra.messaging;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;

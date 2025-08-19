@@ -23,7 +23,7 @@ import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamen
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.exception.AutorizacaoException;
 import com.api.controleverbasbackend.exception.ValidacaoException;
-import com.api.controleverbasbackend.infra.messaging.kafka.LogProducer;
+import com.api.controleverbasbackend.infra.messaging.LogProducer;
 import com.api.controleverbasbackend.repository.DepartamentoRepository;
 import com.api.controleverbasbackend.service.DepartamentoService;
 import com.api.controleverbasbackend.utils.MockUtils;

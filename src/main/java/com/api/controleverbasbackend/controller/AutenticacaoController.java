@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.controleverbasbackend.domain.enums.sistemalog.TipoLog;
 import com.api.controleverbasbackend.dto.autenticacao.DadosLogin;
 import com.api.controleverbasbackend.dto.autenticacao.DadosTokenJWT;
-import com.api.controleverbasbackend.infra.messaging.log.Loggable;
+import com.api.controleverbasbackend.infra.logging.Loggable;
 import com.api.controleverbasbackend.service.AutenticacaoService;
 
 import jakarta.validation.Valid;

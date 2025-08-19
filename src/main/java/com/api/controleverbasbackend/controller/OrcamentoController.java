@@ -23,8 +23,8 @@ import com.api.controleverbasbackend.domain.enums.sistemalog.TipoLog;
 import com.api.controleverbasbackend.dto.orcamento.DadosCadastroOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosDetalhamentoOrcamento;
 import com.api.controleverbasbackend.dto.orcamento.DadosListagemOrcamento;
-import com.api.controleverbasbackend.infra.messaging.log.Loggable;
-import com.api.controleverbasbackend.infra.messaging.log.Loggables;
+import com.api.controleverbasbackend.infra.logging.Loggable;
+import com.api.controleverbasbackend.infra.logging.Loggables;
 import com.api.controleverbasbackend.service.OrcamentoService;
 
 import jakarta.validation.Valid;

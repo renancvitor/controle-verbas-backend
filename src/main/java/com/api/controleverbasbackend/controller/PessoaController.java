@@ -25,8 +25,8 @@ import com.api.controleverbasbackend.dto.pessoa.DadosAtualizacaoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosCadastroPessoaUsuario;
 import com.api.controleverbasbackend.dto.pessoa.DadosDetalhamentoPessoa;
 import com.api.controleverbasbackend.dto.pessoa.DadosListagemPessoa;
-import com.api.controleverbasbackend.infra.messaging.log.Loggable;
-import com.api.controleverbasbackend.infra.messaging.log.Loggables;
+import com.api.controleverbasbackend.infra.logging.Loggable;
+import com.api.controleverbasbackend.infra.logging.Loggables;
 import com.api.controleverbasbackend.service.PessoaService;
 
 import jakarta.validation.Valid;

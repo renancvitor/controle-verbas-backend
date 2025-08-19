@@ -28,7 +28,7 @@ import com.api.controleverbasbackend.dto.cargo.DadosAtualizacaoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosCadastroCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosDetalhamentoCargo;
 import com.api.controleverbasbackend.dto.cargo.DadosListagemCargo;
-import com.api.controleverbasbackend.infra.messaging.kafka.LogProducer;
+import com.api.controleverbasbackend.infra.messaging.LogProducer;
 import com.api.controleverbasbackend.repository.CargoRepository;
 import com.api.controleverbasbackend.service.CargoService;
 import com.api.controleverbasbackend.utils.MockUtils;

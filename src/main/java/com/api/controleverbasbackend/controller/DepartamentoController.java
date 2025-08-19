@@ -25,8 +25,8 @@ import com.api.controleverbasbackend.dto.departamento.DadosAtualizacaoDepartamen
 import com.api.controleverbasbackend.dto.departamento.DadosCadastroDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosDetalhamentoDepartamento;
 import com.api.controleverbasbackend.dto.departamento.DadosListagemDepartamento;
-import com.api.controleverbasbackend.infra.messaging.log.Loggable;
-import com.api.controleverbasbackend.infra.messaging.log.Loggables;
+import com.api.controleverbasbackend.infra.logging.Loggable;
+import com.api.controleverbasbackend.infra.logging.Loggables;
 import com.api.controleverbasbackend.service.DepartamentoService;
 
 import jakarta.validation.Valid;
