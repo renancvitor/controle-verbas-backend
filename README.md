@@ -4,6 +4,15 @@
 
 ---
 
+<h2 align="center"> 🔗 Frontend</h2>
+
+Este backend possui um frontend totalmente integrado e funcional. Para explorar a interface de usuário, visite o repositório do frontend:
+
+- 🌐 [Controle Verbas — Frontend](https://github.com/seu-usuario/controle-verbas-frontend)
+
+
+---
+
 <h2 align="center"> Visão Geral do Projeto</h2>
 
 **Controle Verbas** é uma **API REST** completa, segura e totalmente automatizada que integra seu [frontend](https://github.com/renancvitor/controle-verbas-frontend), com autenticação via [JWT](https://jwt.io/), validação robusta e arquitetura profissional com [Spring Boot](https://spring.io/projects/spring-boot).<br>

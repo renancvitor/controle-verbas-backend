@@ -14,8 +14,8 @@ docs
  │    ├── login-via-api-com-jwt.gif
  │    └── reprovar-aprovar-liberar-orcamentos.gif
  ├── documentacao-swagger.md
- ├── project-structure.md
- └── supabase-schema-ggttmuvdnqhlfqrtxuha.png
+ ├── estrutura-projeto.md
+ └── supabase-schema.png
 
 src/main
  ├── java/com/api/controleverbasbackend
