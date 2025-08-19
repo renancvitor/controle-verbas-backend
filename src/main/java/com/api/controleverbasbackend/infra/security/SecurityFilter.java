@@ -29,8 +29,13 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
+
         String path = request.getServletPath();
-        if ("/login".equals(path)) {
+
+        // Permitir login e Swagger sem autenticação
+        if ("/login".equals(path)
+                || path.startsWith("/swagger-ui")
+                || path.startsWith("/v3/api-docs")) {
             filterChain.doFilter(request, response);
             return;
         }
