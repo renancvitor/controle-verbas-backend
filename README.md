@@ -114,7 +114,7 @@ Para ver a interface [Swagger](https://swagger.io/specification/) em ação, ace
 ### 🗂️ **Diagrama ER do banco de dados PostgreSQL**
 
 <p align="center">
-  <img src="./docs/supabase-schema.png" alt="Diagrama ER" width="600"/>
+  <img src="./docs/controle-verbas-der_1.png" alt="Diagrama ER" width="600"/>
 </p>
 
 ---
